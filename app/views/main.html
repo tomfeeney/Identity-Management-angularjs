@@ -1,0 +1,82 @@
+<header>
+    <div class="container">
+        <div class="hp_logo"></div>
+
+        <div class="hp_logo"><a class="hf_logo link_metrics" href="#"
+                                title="HP� Official Site | Laptop Computers, Desktops , Printers, Servers and more"><img
+                xalt="HP� Official Site   | Laptop Computers, Desktops , Printers, Servers and more"
+                src="http://welcome.hp-ww.com/country/us/en/cs/images/i/header-footer/caas-hf-v3/hp-logo.gif"></a></div>
+
+
+        <nav>nav</nav>
+    </div>
+</header>
+
+
+<article>
+    <form ng-controller="UserController">
+        <h1>User Registration</h1>
+
+        <p>Register your account</p>
+
+        <div class="span3">
+            <div>
+                First Name:
+            </div>
+
+            <div>
+                <input type="text" ng-model="user.firstname" required="">
+            </div>
+
+            <div class="span3">
+                <div>
+                    Last Name:
+                </div>
+
+                <div>
+                    <input type="text" ng-model="user.lastname" required="">
+                </div>
+
+                <div>
+                    E-mail:
+                </div>
+
+                <div>
+                    <input type="email" ng-model="user.email" required="">
+                </div>
+            </div>
+
+
+            <div>
+                Title:
+            </div>
+
+            <div>
+                <input type="text" ng-model="user.title" not-required="">
+            </div>
+        </div>
+
+        <div class="span3">
+            <div>
+                <label for="countries">Country:</label>
+            </div>
+
+            <div>
+                <select name="countries" id="countries" ng-model="country"
+                        ng-options="country.code as country.name for country in countries">
+                </select>
+            </div>
+
+            <div>
+                <button ng-click="update(user)" class="btn">Submit</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+<footer>footer</footer>
+
+
+
+
+

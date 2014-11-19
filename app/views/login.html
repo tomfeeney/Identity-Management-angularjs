@@ -1,0 +1,72 @@
+<div class="jumbotron">
+  <form name="loginForm" ng-controller="UserController" ng-init="initLogin()" id="loginForm">
+    <div class="spacer-bottom">
+      <h3>Quickly and easily manage key areas of enterprise account services.</h3>
+
+      <p>Sign in or create an account.</p>
+    </div>
+
+    <div class="row spacer-bottom">
+      <div class="col-xs-12 col-sm-12 col-lg-12">
+        <p translate>login.email</p>
+      </div>
+
+      <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
+        <input class="" type="email" ng-model="email" placeholder="" required="">
+      </div>
+    </div>
+
+    <div class="row spacer-bottom">
+      <div class="col-xs-12 col-sm-12 col-lg-12">
+        <p translate>login.password</p>
+      </div>
+
+      <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
+        <input class="" type="password" ng-model="password" placeholder="" required="">
+      </div>
+    </div>
+
+    <div class="row spacer-bottom" ng-hide="WebIdMode">
+      <div class="col-xs-12 col-sm-12 col-lg-12">
+        <p translate>login.auth_provider <span class="help"><a rel="" tooltip="Whoever maintains your credentials and account">Help</a></span></p>
+      </div>
+
+      <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
+        <select name="authProviders" id="authProviders" data-ng-model="authProvider" class="form-control" data-ng-options="authProvider.code as authProvider.name for authProvider in authProviders | orderBy:'name'" placeholder="AuthProvider" required="">
+          </select>
+      </div>
+
+      <!-- <div class="col-xs-4 col-sm-2 col-md-2 col-md-2 col-lg-2">
+        <span class="help"><a rel="" tooltip="Whoever maintains your credentials and account">Help</a></span>
+      </div> -->
+    </div>
+
+    <div class="row spacer-bottom">
+      <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+        <span class=""><a href="#/signup">Create an Account</a></span>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+        <span class="">
+          <a href="#/passwordreset">I forgot my password</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="row spacer-bottom">
+      <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4 spacer-bottom">
+        <button type="submit" class="btn-hp btn-RL" ng-disabled="!loginForm.$valid" data-ng-click="login()">Sign in</button>
+      </div>
+    </div>
+<!--
+    <div class="row spacer-bottom" ng-hide="WebIdMode" ng-controller="LoginController">
+      <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 spacer-bottom">
+        <a href="" class="facebook oauth_login spacer-fb"><img src="img/facebook_icon.png"> Facebook</a>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+        <a href="javascript:void(0);" ng-click="loginGoogle()" class="google oauth_login btn-RL"><img src="img/google-plus-24.png"> Google +</a>
+      </div>
+    </div>
+    -->
+  </form>
+</div>

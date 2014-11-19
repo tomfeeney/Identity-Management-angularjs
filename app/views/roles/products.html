@@ -1,0 +1,110 @@
+<div ng-controller="ProductController" ng-init="initProducts()">
+
+  <div class="row spacer-between">
+    <div class="col-md-4">
+      <idm-search-box criteria="productCriteria" placeholder="Search by product name" on-search="searchProducts(productCriteria)" />
+    </div>
+    <div class="col-md-3 col-md-offset-4 pull-right">
+      <span class="spacer-between-xs hidden-lg"></span>
+      <a href="javascript:void(0);" ng-click="addProduct()" class="btn-hp btn-large pull-right"><span class="span glyphicon glyphicon-plus"></span> Add Product</a>
+    </div>
+  </div>
+
+  <div>
+    <table class="table table-hover idm-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th class="hidden-xs">Description</th>
+          <th class="ico_btn">Manage</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="prod in pageProducts">
+        <tr>
+          <td>{{prod.name}}</td>
+          <td class="hidden-xs">{{prod.description}}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Action <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu pull-right" role="menu">
+                <li><a href="javascript:void(0);" ng-click="updateProduct(prod)"><span class="glyphicon glyphicon-wrench"></span> Update</a></li>
+                <li><a href="javascript:void(0);" ng-click="assignServices(prod)"><span class="glyphicon glyphicon-plus"></span> Assign Services</a></li>
+                <li><a href="javascript:void(0);" ng-click="deleteProduct(prod)"><span class="glyphicon glyphicon-trash"></span> Remove</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <hr/>
+  <idm-pager on-select-page="setProductPage(page)" match-items="matchProducts" />
+
+</div>
+
+<script id="views/roles/product-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Product'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Product Information</h4>
+  <form name="productForm" role="form">
+    <div class="form-group">
+      <label for="">Product Name</label>
+      <input name="productName" type="text" class="form-control" ng-model="data.name" ng-maxlength="100" required="required" idm-model-fixer>
+      <p class="alert alert-info" ng-show="productForm.productName.$dirty && productForm.productName.$error.maxlength">Please enter no more than 100 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.description"  ng-maxlength="300" idm-model-fixer>
+      <p class="alert alert-info" ng-show="productForm.description.$dirty && productForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="productForm.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/roles/product-service-dlg.html" type="text/ng-template">
+<div class="modal-header" ng-init="initDialog()">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Assign Services</h4>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label for="">Product Name</label>
+      <p class="form-control-static">{{data.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Assigned Services</label><br/>
+      <!-- idm-multi-check repeat-model="assignedServices" check-model="data.toBeRemovedServices" criteria="assignedCriteria" search-hint="Filter by service name" on-select-all="selectAll($event, 'toBeRemovedServices', 'assignedServices')"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeRemovedServices" ng-options="g.name for g in assignedServices | orderBy:'name'" size="8" multiple="multiple" />
+    </div>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="addServices()">Assign <span class="glyphicon glyphicon-chevron-up"></span></button>
+      <span class="spacer-fb"></span>
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="removeServices()">Remove <span class="glyphicon glyphicon-chevron-down"></span></button>
+    </div>
+    <div class="form-group">
+      <label for="">Available Services</label>
+      <!-- idm-multi-check repeat-model="availableServices" check-model="data.toBeAssignedServices" criteria="availableCriteria" search-hint="Filter by service name" on-select-all="selectAll($event, 'toBeAssignedServices', 'availableServices')"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeAssignedServices" ng-options="g.name for g in availableServices | orderBy:'name'" size="8" multiple="multiple"/>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp">Submit</button>
+</div>
+</script>

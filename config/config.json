@@ -1,0 +1,15 @@
+{
+    "loggerConfig" : {
+        "transportLogFile" : "./IdentityManagementLog.log",
+        "exceptionLogFile" : "./IdentityManagementErrorLog.log",
+        "outputToConsole" : true
+    },
+    "localServer": {
+        "Hostname" : "127.0.0.1",
+        "Port" : "10200"
+    },
+    "idmWebService" : {
+        "Hostname" : "127.0.0.1",
+        "Port" : "10190"
+    }
+}

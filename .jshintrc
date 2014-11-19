@@ -1,0 +1,34 @@
+{
+  "node": true,
+  "browser": true,
+  "esnext": true,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "regexp": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true,
+  "globals": {
+    "angular": true
+  } ,
+
+
+    "-W069":false, // disable: is better written in dot notation
+    "-W106":false, // disable: Identifier is not in camel case
+    "-W098":false, // disable: headers' is defined but never used
+    "-W117":false, // disable: is not defined
+    "-W099": false, // disable: Mixed spaces and tabs.
+    "-W065": false, // disable: Missing radix parameter.
+    "-W015": false, // disable: Expected 'X' to have an indentation at Y instead at Z.
+    "-W116": false // disable: Expected '===' and instead saw '=='.
+}

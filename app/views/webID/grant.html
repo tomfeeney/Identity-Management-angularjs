@@ -1,0 +1,36 @@
+<div class="gramidcontainer" ng-init="initGrant()">
+
+  <section>
+    <span class="logo"></span>
+  </section>
+
+  <span class="hr"></span>
+
+  <h5>You are logging into <b><a ng-href='{{authformdata.organizationUrl}}' class="clickable" target="_black">{{authformdata.name}}</a></b> using <b>HP Web ID</b></h5>
+
+  <section class="message">
+    Do you allow this application to access your HP Web ID with the following privileges?
+  </section>
+  <br/><br/>
+
+  <section class="message">
+    <dl class="dl-horizontal" ng-repeat="scope in authformdata.scopeDescription">
+      <dt class="force-wrap">{{scope.name}}</dt>
+      <dd>{{scope.description}}</dd>
+    </dl>
+  </section>
+  
+  <span class="hr"></span>
+  
+  <section class="spacer-bottom">
+    <div class="half">
+      <button class="btn-hp" ng-click="grantAccess()">Allow</button>
+    </div>
+    <div class="half">
+      <div class="right">
+        <button class="btn-hp" ng-click="denyAccess()">Deny</button>
+      </div>
+    </div>
+  </section>
+  
+</div>

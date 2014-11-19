@@ -1,0 +1,273 @@
+/** ----------- HP Button styles here ----------- **/
+button {
+  font-family: "HP Simplified", Arial;
+  font-size: 14px;
+  line-height: normal;
+}
+.btn-RL {
+  float: left;
+  margin-left: 20px;
+}
+.RL {
+    float: left;
+}
+.btn-hp {
+  display: inline-block;
+  display: inline;
+  padding: 8px 12px;
+  margin-bottom: 0;
+  /*margin-left: .3em;*/
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: none !important;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #0072A3;
+  background-image: none !important;
+  background-repeat: repeat-x;
+  border: 1px solid #0096D6;
+  border: 0;
+  border-color: #0096D6;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-bottom-color: #0096D6;
+  -webkit-border-radius: 0 4px;
+  -moz-border-radius: 0 4px;
+  border-radius: 0 4px;
+  filter: none;
+  filter: none;
+  zoom: 1;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+ 
+  }
+.btn-hp:hover,
+.btn-hp:focus,
+.btn-hp:active,
+.btn-hp.active,
+.btn-hp.disabled,
+.btn-hp[disabled] {
+  color: #ffffff;
+  background-color: #0096D6;
+  background-color: #0096D6;
+  }
+
+.btn-hp:active,
+.btn-hp.active {
+  background-color: #0096D6;
+  }
+
+/** .btn-hp:first-child {
+  margin-left: 0;
+} **/
+
+.btn-hp:hover,
+.btn-hp:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-position: 0;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+  }
+
+.btn-hp:focus {
+  outline: thin dotted #333;
+  outline: 0px auto -webkit-focus-ring-color;
+  outline-offset: 0px;
+  }
+
+.btn-hp.active,
+.btn-hp:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  }
+
+.btn-hp.disabled,
+.btn-hp[disabled] {
+  cursor: default;
+  background-image: none;
+  opacity: 0.25;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  }
+/** start btn-danger **/
+.btn-danger {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  -webkit-border-radius: 0 4px;
+  -moz-border-radius: 0 4px;
+  border-radius: 0 4px;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+  color: #ffffff;
+  background-color: #d2322d;
+  border-color: #ac2925;
+}
+
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+  background-image: none;
+}
+
+.btn-danger.disabled,
+.btn-danger[disabled],
+fieldset[disabled] .btn-danger,
+.btn-danger.disabled:hover,
+.btn-danger[disabled]:hover,
+fieldset[disabled] .btn-danger:hover,
+.btn-danger.disabled:focus,
+.btn-danger[disabled]:focus,
+fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled:active,
+.btn-danger[disabled]:active,
+fieldset[disabled] .btn-danger:active,
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
+fieldset[disabled] .btn-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+/** end btn-danger **/
+
+.btn-hp-small {
+  padding: 2px 10px;
+  font-size: 11.9px;
+  -webkit-border-radius: 0 3px;
+  -moz-border-radius: 0 3px;
+  border-radius: 0 3px;
+  }
+
+.btn-hp-circle {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  }
+/** ----------- end HP Button styles here ----------- **/
+
+.btn-hp-left {
+  float: left;
+  padding: 0 0 0 15px;
+}
+.btn-hp-right {
+  float: right;
+  padding: 0 15px 0 0;
+}
+.btn-2nd {
+  background-color: white;
+  color: #7f7f7f;
+}
+.modal-content .btn-2nd {
+  background-color: #ebebeb;
+}
+.modal-content .btn-2nd:hover {
+  background-color: #ababab;
+}
+/** Facebook Button styles here */
+a.facebook, a.google {
+background-color: #475da4\9;
+display: block;
+width: auto;
+text-decoration: none;
+filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#FF6A7CB6',endColorstr='#FF475DA4');
+background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#6a7cb6),color-stop(100%,#475da4));
+background-image: -webkit-linear-gradient(#6a7cb6,#475da4);
+background-image: -moz-linear-gradient(#6a7cb6,#475da4);
+background-image: -o-linear-gradient(#6a7cb6,#475da4);
+background-image: linear-gradient(#6a7cb6,#475da4);
+text-align: center;
+padding: 0 10px;
+height: 32px;
+line-height: 32px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;
+color: #ffffff;
+font-size: 12px;
+/** font-weight: normal; **/
+border: 0;
+text-shadow: rgba(0,0,0,0.25) 0 -1px 0;
+-webkit-transition: all .1s ease;
+-moz-transition: all .1s ease;
+-o-transition: all .1s ease;
+transition: all .1s ease;
+-webkit-box-shadow: rgba(255,255,255,0.25) 0 1px 0 inset,rgba(0,0,0,0.05) 0 -1px 1px inset,rgba(0,0,0,0.15) 0 1px 2px;
+-moz-box-shadow: rgba(255,255,255,0.25) 0 1px 0 inset,rgba(0,0,0,0.05) 0 -1px 1px inset,rgba(0,0,0,0.15) 0 1px 2px;
+box-shadow: rgba(255,255,255,0.25) 0 1px 0 inset,rgba(0,0,0,0.05) 0 -1px 1px inset,rgba(0,0,0,0.15) 0 1px 2px;
+cursor: pointer;
+outline: 0;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+cursor: pointer;
+width: 100px;
+font-size: 12px;
+/** font-weight: 500; **/
+padding: 0;
+margin: 0;
+display: inline-block;
+}
+a.facebook {
+    margin: 0 20px 0 0;
+}
+a.facebook img, a.google img {
+position: relative;
+top: 0px;
+margin-right: 4px;
+}
+a.google {
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#dd4b39',endColorstr='#dd4b39');
+background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#dd4b39),color-stop(100%,#dd4b39));
+background-image: -webkit-linear-gradient(#dd4b39,#dd4b39);
+background-image: -moz-linear-gradient(#dd4b39,#dd4b39);
+background-image: -o-linear-gradient(#dd4b39,#dd4b39);
+background-image: linear-gradient(#dd4b39,#dd4b39);
+}
+
+/** ----------- 480px + ----------- **/
+@media(min-width:480px) and (max-width: 768px){
+  /* Styles */
+  .btn-RL {
+    float: left;
+    margin-left: 20px;
+    }
+    .RL {
+    float: right;
+    margin: 0 5px 5px 5px;
+    }
+    .LR {
+    float: left;
+    }
+}
+/** ----------- 768px + ----------- **/
+@media(min-width: 768px) {
+  /* Styles */
+  .btn-RL {
+    float: right;
+    margin-left: 20px;
+    }
+    .RL {
+    float: right;
+    margin: 0 5px 5px 5px;
+    }
+    .LR {
+        float: left;
+    }
+}

@@ -1,0 +1,136 @@
+<div class="gramidcontainer">
+
+  <div ng-controller="PortalProfileController" ng-init="initProfile()">
+
+    <section>
+      <span class="logo"></span>
+    </section>
+
+    <span class="hr"></span>
+
+    <form name="appForm" class="form-horizontal" role="form">
+    
+      <div class="form-group">
+        <label for="firstName" class="control-label col-xs-12 col-sm-3">Title (optional):</label>
+        <div class="col-xs-12 col-sm-7">
+          <input name="title" class="form-control" type="text" ng-model="user.title" placeholder="Title" idm-model-fixer ng-disabled="!editEnabled()" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName" class="control-label col-xs-12 col-sm-3">First Name:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="firstName" name="firstName" class="form-control" type="text" ng-model="user.firstName" required="required" ng-maxlength="50" idm-model-fixer ng-disabled="!editEnabled()" idm-validator="name">
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.required" tooltip="Please enter first name." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName" class="control-label col-xs-12 col-sm-3">Last Name:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="lastName" name="lastName" class="form-control" type="text" ng-model="user.lastName" required="required" ng-maxlength="50" idm-model-fixer ng-disabled="!editEnabled()" idm-validator="name">
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.required" tooltip="Please enter last name." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="control-label col-xs-12 col-sm-3">Email:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="email" name="email" class="form-control" type="email" ng-model="user.email" required="required" ng-maxlength="100" ng-disabled="true" idm-validator="email">
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.required" tooltip="Please enter email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.idmEmail" tooltip="Enter a valid email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.maxlength" tooltip="Please enter no more than 100 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="country" class="control-label col-xs-12 col-sm-3">Country:</label>
+        <div class="col-xs-12 col-sm-7">
+          <select id="country" name="country" class="form-control"
+              data-ng-model="user.country"
+              data-ng-options="country.code as country.name for country in countries | orderBy:'name'"
+              required="required" ng-disabled="!editEnabled()">
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="language" class="control-label col-xs-12 col-sm-3">Language:</label>
+        <div class="col-xs-12 col-sm-7">
+          <select name="language" id="language" class="form-control"
+              data-ng-model="user.language"
+              data-ng-options="language.code as language.name for language in languages | orderBy:'name'"
+              required="required" ng-disabled="!editEnabled()">
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="country" class="control-label col-xs-12 col-sm-3">Security Question:</label>
+        <div class="col-xs-12 col-sm-7">
+          <select name="challengeQuestions"
+            data-ng-model="user.challengeQuestion.id" class="form-control"
+            data-ng-options="challengeQuestion.id as challengeQuestion.question for challengeQuestion in challengeQuestions | orderBy:'question'"
+            placeholder="Security Question" required="required">
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="language" class="control-label col-xs-12 col-sm-3">Security Answer:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input name="answer" class="form-control" type="text" ng-model="user.answer" ng-required="!editEnabled()" ng-maxlength="50" />
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="editEnabled('crtp')">
+        <label for="currentPassword" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">Current Password:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="currentPassword" name="currentPassword" class="form-control" type="password" ng-model="user.currentPassword" ng-required="false" ng-minlength="6" ng-maxlength="20">
+          <span class="icon" ng-show="appForm.currentPassword.$dirty && appForm.currentPassword.$error.required" tooltip="Please enter password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.currentPassword.$dirty && (appForm.currentPassword.$error.maxlength ||  appForm.currentPassword.$error.minlength)" tooltip="Passwords must be 6-20 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="newPassword" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">New Password:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="newPassword" name="newPassword" class="form-control" type="password" ng-model="user.passwordNew" ng-required="!editEnabled()" ng-minlength="6" ng-maxlength="20">
+          <span class="icon" ng-show="appForm.newPassword.$dirty && appForm.newPassword.$error.required" tooltip="Please enter new password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.newPassword.$dirty && (appForm.newPassword.$error.maxlength || appForm.newPassword.$error.minlength)" tooltip="Passwords must be 6-20 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group" ng-show="editEnabled('secq')">
+        <label for="repeatPassword" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">Repeat New Password:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="repeatPassword" name="repeatPassword" class="form-control" type="password" ng-model="user.passwordConfirm" ng-required="!editEnabled()" match="user.passwordNew">
+          <span class="icon" ng-show="appForm.repeatPassword.$dirty && appForm.repeatPassword.$error.required" tooltip="Please enter password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.repeatPassword.$error.mismatch" tooltip="Passwords must match." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="!editEnabled()">
+        <div class="col-xs-12 col-sm-7 portalprofile-terms">
+          <input type="checkbox" data-ng-model="agreeTerms" class="pull-left form-control" ng-required="!editEnabled()">
+          I agree to the <a href="javascript:void(0);" ng-click="showDialog(getEula())">Terms of Use</a>
+        </div>
+      </div>
+
+    </form>
+
+    <span class="hr"></span>
+
+    <section class="checkboxtext idm-button-bar">
+      <div class="half">
+        &nbsp;
+      </div>
+
+      <div class="half">
+        <div class="right">
+          <button ng-disabled="appForm.$invalid" ng-click="updateUser()" class="btn-hp btn-RL">Submit</button>
+          <button ng-click="cancelUpdate()" class="btn-hp btn-RL btn-2nd">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>

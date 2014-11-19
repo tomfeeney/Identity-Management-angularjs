@@ -1,0 +1,105 @@
+<div ng-controller="TokenGatewayMainController" ng-init="initPermissions()">
+
+  <div class="row spacer-between">
+    <div class="col-md-4">
+      <idm-search-box criteria="searchCriteria" placeholder="Search by permission" on-search="searchPermissions(searchCriteria)" />
+    </div>
+    <div class="col-md-3 col-md-offset-4 pull-right">
+      <span class="spacer-between-xs hidden-lg"></span>
+      <a href="javascript:void(0);" ng-click="addPermission()" class="btn-hp btn-large pull-right"><span class="span glyphicon glyphicon-plus"></span> Add Permission</a>
+    </div>
+  </div>
+
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="hidden-xs">Permission</th>
+          <th class="ico_btn">Manage</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="perm in pagePermissions">
+        <tr>
+          <td class="hidden-xs">{{perm}}</td>
+          <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="javascript:void(0);" ng-click="updateClientDlg(client)"><span class="glyphicon glyphicon-wrench"></span> Update</a></li>
+                    <li><a href="javascript:void(0);" ng-click="removeClient(client.clientInfo)"><span class="glyphicon glyphicon-trash"></span> Remove</a></li>
+                  </ul>
+                </div>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <hr/>
+  <pagination on-select-page="setPermissionsPage(page)" ng-show="matchPermissions.length != 0" total-items="matchPermissions.length" page="currentPage" items-per-page="itemsPerPage" class="pagination pull-right" max-size="5" rotate="false"></pagination>
+
+</div>
+
+<script id="views/roles/permission-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Permission'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Permission Information</h4>
+  <form name="permissionForm" role="form">
+    <div class="form-group">
+      <label for="">Endpoint</label>
+      <input name="endpoint" type="text" class="form-control" ng-model="data.endpoint" ng-maxlength="255" required="required">
+      <p class="alert alert-info" ng-show="permissionForm.endpoint.$dirty && permissionForm.endpoint.$error.maxlength">Please enter no more than 255 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Operation</label>
+      <input name="operation" type="text" class="form-control" ng-model="data.operation" ng-maxlength="30" required="required">
+      <p class="alert alert-info" ng-show="permissionForm.operation.$dirty && permissionForm.operation.$error.maxlength">Please enter no more than 30 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.description" ng-maxlength="300">
+      <p class="alert alert-info" ng-show="permissionForm.description.$dirty && permissionForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="permissionForm.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/roles/permission-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Permission'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Permission Information</h4>
+  <form name="permissionForm" role="form">
+    <div class="form-group">
+      <label for="">Endpoint</label>
+      <input name="endpoint" type="text" class="form-control" ng-model="data.endpoint" ng-maxlength="255" required="required">
+      <p class="alert alert-info" ng-show="permissionForm.endpoint.$dirty && permissionForm.endpoint.$error.maxlength">Please enter no more than 255 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Operation</label>
+      <input name="operation" type="text" class="form-control" ng-model="data.operation" ng-maxlength="30" required="required">
+      <p class="alert alert-info" ng-show="permissionForm.operation.$dirty && permissionForm.operation.$error.maxlength">Please enter no more than 30 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.description" ng-maxlength="300">
+      <p class="alert alert-info" ng-show="permissionForm.description.$dirty && permissionForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="permissionForm.$invalid">Submit</button>
+</div>
+</script>

@@ -1,0 +1,236 @@
+<div class="row">
+    <div class="col-xs-10 col-sm-10 col-lg-10"><h3>Account Details</h3></div>
+</div>
+
+<div class="row" ng-controller="UserEditController" data-ng-init="initProfile()">
+
+  <div class="col-xs-12 col-sm-6">
+      <table class="table table-hover">
+          <thead>
+          </thead>
+          <tbody>
+          <tr class="">
+              <th class="tble_profileHeader">Title:</th>
+              <td class="tble_profile">{{user.title}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeTitle()">Change</a></td>
+          </tr>
+          <tr class="">
+              <th class="tble_profileHeader">Name:</th>
+              <td class="tble_profile">{{user.firstName}} {{user.lastName}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeName()">Change</a></td>
+          </tr>
+          <tr class="">
+              <th class="tble_profileHeader">Email Address:</th>
+              <td class="tble_profile">{{user.email}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeEmailAddress()">Change</a></td>
+          </tr>
+  
+          <tr class="">
+              <th class="tble_profileHeader">Password:</th>
+              <td class="tble_profile">*************</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changePassword()">Change</a></td>
+          </tr>
+  
+          <tr class="">
+              <th class="tble_profileHeader">Security Question:</th>
+              <td class="tble_profile">{{user.challengeQuestion.question}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeChallengeQ()">Change</a></td>
+          </tr>
+  
+          <tr class="">
+              <th class="tble_profileHeader">Country:</th>
+              <td class="tble_profile">{{user.country}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeCountry()">Change</a></td>
+          </tr>
+  
+          <tr class="">
+              <th class="tble_profileHeader">Language:</th>
+              <td class="tble_profile">{{user.language}}</td>
+              <td class="tble_profileChange"><a href="javascript:void(0);" class="show pull-right" ng-click="changeLanguage()">Change</a></td>
+          </tr>
+          <tr class="">
+              <th class="tble_profileHeader">Authentication Provider:</th>
+              <td class="tble_profile">{{authProvider}}</td>
+          </tr>
+          </tbody>
+      </table>
+  
+      <div class="col-xs-12 col-sm-12">
+          <a data-toggle="modal" class="btn-hp btn-danger pull-right spacer-fb" ng-click="deleteUser()"><span
+                  class="glyphicon glyphicon-trash"></span> Delete Account</a>
+          <a data-toggle="modal" class="btn-hp btn-default pull-right spacer-fb" ng-click="resendVerificationEmail()"><span
+                  class="glyphicon glyphicon-send"></span> Resend Verification Email</a>
+      </div>
+  </div>
+
+</div>
+
+<script id="views/change-title-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Title</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" class="form-control" ng-model="data.title" ng-maxlength="50">
+      <p ng-show="form.title.$dirty && form.title.$error.maxlength" class="alert alert-info">Please enter no more than 50 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-name-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Name</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">First Name:</label>
+      <input name="firstName" class="form-control" type="text" ng-model="data.firstName" required="required" ng-maxlength="50" idm-validator="name">
+    </div>
+    <div class="form-group">
+      <label for="">Last Name:</label>
+      <input name="lastName" class="form-control" type="text" ng-model="data.lastName" required="required" ng-maxlength="50" idm-validator="name">
+    </div>
+    <p class="alert alert-info" ng-show="(form.firstName.$dirty && form.firstName.$error.maxlength) || (form.lastName.$dirty && form.lastName.$error.maxlength)">Please enter no more than 50 characters.</p>
+    <p class="alert alert-info" ng-show="(form.firstName.$dirty && form.firstName.$error.idmName) || (form.lastName.$dirty && form.lastName.$error.idmName)">This field can only contain alphabetic characters.</p>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-email-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Email Address</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">Email Address:</label>
+      <input name="emailAddress" class="form-control" type="email" ng-model="data.email" required="required" ng-maxlength="100" idm-validator="email">
+      <p ng-show="form.emailAddress.$dirty && form.emailAddress.$error.idmEmail" class="alert alert-info">Enter a valid email address.</p>
+      <p ng-show="form.emailAddress.$dirty && form.emailAddress.$error.maxlength" class="alert alert-info">Please enter no more than 100 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-password-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Password</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">Current Password:</label>
+      <input name="password" class="form-control" type="password" ng-model="data.password" required="required">
+    </div>
+    <div class="form-group">
+      <label for="">New Password:</label>
+      <input name="passwordNew" class="form-control" type="password" ng-model="data.passwordNew" required="required" ng-minlength="6" ng-maxlength="20">
+    </div>
+    <div class="form-group">
+      <label for="">Confirm New Password:</label>
+      <input name="passwordConfirm" class="form-control" type="password" ng-model="data.passwordNewConfirm" required="required" match="data.passwordNew">
+    </div>
+    <p ng-show="(form.$dirty && (form.passwordNew.$error.maxlength ||  form.passwordNew.$error.minlength))"
+      class="alert alert-info">Passwords must be 6-20 characters.</p>
+    <p ng-show="form.passwordConfirm.$error.mismatch" class="alert alert-info">Passwords must match.</p>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-question-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Security Question</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">Security Question:</label>
+      <select name="challengeQuestions" id="challengeQuestions"
+        data-ng-model="data.user.challengeQuestion.id" class="form-control"
+        data-ng-options="challengeQuestion.id as challengeQuestion.question for challengeQuestion in data.challengeQuestions | orderBy:'question'"
+        placeholder="Security Question" required="required">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Answer:</label>
+      <input name="answer" class="form-control" type="text" ng-model="data.user.answer" required="required" ng-maxlength="50">
+      <p ng-show="form.answer.$dirty && form.answer.$error.maxlength" class="alert alert-info">Please enter no more than 50 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-country-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Country</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">Country:</label>
+      <select name="countries" id="countries"
+        data-ng-model="data.user.country" class="form-control"
+        data-ng-options="country.code as country.name for country in data.countries | orderBy:'name'"
+        placeholder="Country" required="required">
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/change-language-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Change Language</h4>
+</div>
+<div class="modal-body">
+  <form name="form" role="form">
+    <div class="form-group">
+      <label for="">Language:</label>
+      <select name="languages" id="languages"
+        data-ng-model="data.user.language" class="form-control"
+        data-ng-options="language.code as language.name for language in data.languages | orderBy:'name'"
+        placeholder="user.language" required="required">
+      </select>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="form.$invalid">Submit</button>
+</div>
+</script>

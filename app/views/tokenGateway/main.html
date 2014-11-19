@@ -1,0 +1,10 @@
+<div class="container" ng-init="initPage()">
+  <div class="row">
+    <p class="lead">Token Gateway Clients</p>
+    <tabset>
+      <tab heading="Clients" select="selectTab('clients')"></tab>
+      <tab heading="Permissions" select="selectTab('permissions')"></tab>
+    </tabset>
+    <div ng-include="templatePath" class="col-md-12"></div>
+  </div>
+</div>

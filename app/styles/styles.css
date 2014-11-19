@@ -1,0 +1,18 @@
+@import "../bower_components/bootstrap/dist/css/bootstrap.min.css";
+
+@import "../bower_components/jquery-ui/themes/smoothness/jquery-ui.css";
+
+@import "../bower_components/dialogs/dialogs.css";
+
+@import "../bower_components/angular-block-ui/angular-block-ui.css";
+
+/** mainl.css keep it for testing - global.css will be used instead **/
+@import "enterprise.css";
+
+@import "global.css";
+
+@import "hp-btn.css";
+@import "typography.css";
+
+@import "hpWebId.css";
+@import "stickyFooter.css";

@@ -1,0 +1,14 @@
+@import "../bower_components/bootstrap/dist/css/bootstrap.min.css";
+
+@import "../bower_components/dialogs/dialogs.min.css";
+
+@import "../bower_components/angular-block-ui/angular-block-ui.css";
+
+/** mainl.css keep it for testing - global.css will be used instead **/
+
+@import "global.css";
+
+@import "hp-btn.css";
+@import "webid-typography.css";
+
+@import "hpWebId.css";

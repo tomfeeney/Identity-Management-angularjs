@@ -1,0 +1,182 @@
+<!-- CREATE AN ACCOUNT-->
+<div class="container">
+
+  <h3>Create Account</h3><br/>
+
+  <form name='appForm' ng-controller="UserController" ng-init="initSignUp()">
+
+    <div class="row">
+
+      <div class="col-md-5">
+
+        <section>
+          <div>Title (optional)</div>
+          <div>
+            <input name="title" class="form-control" type="text" ng-model="user.title" placeholder="Title (optional)"></input>
+          </div>
+        </section>
+        <section id="nameSection">
+        </section>
+        <section>
+          <div>First Name</div>
+          <div>
+            <input name="firstName" class="form-control" type="text" ng-model="user.firstName" placeholder="First Name" required="" ng-maxlength="50" idm-validator="name"></input>
+          </div>
+        </section>
+        <section id="nameSection">
+          <div>
+            <div ng-show="appForm.firstName.$dirty && appForm.firstName.$error.idmName">
+              <p class="alert alert-info">This field can only contain alphabetic characters.</p>
+            </div>
+            <div ng-show="appForm.firstName.$dirty && appForm.firstName.$error.maxlength">
+              <p class="alert alert-info">Please enter no more than 50 characters.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div>Last Name</div>
+          <div>
+            <input name="lastName" class="form-control" type="text" ng-model="user.lastName" placeholder="Last Name" required="" ng-maxlength="50" idm-validator="name"></input>
+          </div>
+        </section>
+        <section id="nameSection">
+          <div>
+            <div ng-show="appForm.lastName.$dirty && appForm.lastName.$error.idmName">
+              <p class="alert alert-info">This field can only contain alphabetic characters.</p>
+            </div>
+            <div ng-show="appForm.lastName.$dirty && appForm.lastName.$error.maxlength">
+              <p class="alert alert-info">Please enter no more than 50 characters.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div>Email</div>
+          <div>
+            <input class="form-control" name="email" type="email" ng-model="user.email" placeholder="Email Address" required="" ng-maxlength="100" idm-validator="email"></input>
+          </div>
+        </section>
+        <section>
+          <div ng-show="appForm.email.$dirty && appForm.email.$error.idmEmail">
+            <p class="alert alert-info">Enter a valid email address.</p>
+          </div>
+          <div ng-show="appForm.email.$dirty && appForm.email.$error.maxlength">
+            <p class="alert alert-info">Please enter no more than 100 characters.</p>
+          </div>
+        </section>
+
+        <section>
+          <div>Password</div>
+          <div>
+            <input name="password" class="form-control" type="password" ng-model="user.password" placeholder="Password" required="true" ng-minlength="6" ng-maxlength="20"></input>
+          </div>
+        </section>
+
+        <section>
+          <div>Confirm Password</div>
+          <div>
+            <input name="passwordConfirm" class="form-control" type="password" ng-model="user.passwordConfirm" placeholder="Confirm Password" required="true" match="user.password" ng-minlength="6" ng-maxlength="20"></input>
+          </div>
+        </section>
+        <section>
+          <div ng-show="(appForm.password.$dirty && appForm.password.$error.maxlength) || (appForm.password.$dirty && appForm.password.$error.minlength)">
+            <p class="alert alert-info">Passwords must be 6-20 characters.</p>
+          </div>
+        </section>
+        <section>
+          <div ng-show="appForm.passwordConfirm.$error.mismatch">
+            <p class="alert alert-info">Passwords must match.</p>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="col-md-5">
+
+        <section>
+          <div>
+            Select an Authentication Provider <span class="help"><a rel="" tooltip="Whoever maintains your credentials and account">Help</a></span>
+          </div>
+          <div>
+            <select name="authProviders" class="form-control"
+              id="authProviders" data-ng-model="authProvider"
+              data-ng-options="authProvider.code as authProvider.name for authProvider in authProviders | orderBy:'name'"
+              placeholder="AuthProvider" required="">
+            </select>
+          </div>
+        </section>
+        <section></section>
+
+        <section>
+          <div>Security Question</div>
+          <div>
+            <select class="form-control" name="challengeQuestions"
+              id="challengeQuestions" data-ng-model="challengeQuestion"
+              data-ng-options="challengeQuestion.id as challengeQuestion.question for challengeQuestion in challengeQuestions | orderBy:'question'"
+              placeholder="Challenge Question" required="">
+            </select>
+          </div>
+        </section>
+        <section></section>
+
+        <section>
+          <div>Answer</div>
+          <div>
+            <input name="answer" class="form-control" type="text" ng-model="user.answer" placeholder="Security Answer" required="" ng-maxlength="50">
+          </div>
+        </section>
+        <section>
+          <div ng-show="appForm.answer.$dirty && appForm.answer.$error.maxlength">
+            <p class="alert alert-info">Please enter no more than 50 characters.</p>
+          </div>
+        </section>
+
+        <section>
+          <div>Select a Country</div>
+          <div>
+            <select class="form-control" name="countries" id="countries"
+              data-ng-model="country"
+              data-ng-options="country.code as country.name for country in countries | orderBy:'name'"
+              placeholder="Country" required="">
+            </select>
+          </div>
+        </section>
+
+        <section>
+          <div>Select a Language</div>
+          <div>
+            <select class="form-control" name="languages" id="languages"
+              data-ng-model="language"
+              data-ng-options="language.code as language.name for language in languages | orderBy:'name'"
+              placeholder="Language" required="">
+            </select>
+          </div>
+        </section>
+
+        </div>
+
+      </div>
+
+    <span class="hr"></span>
+
+    <div class="col-md-5">
+      <section class="checkboxtext">
+        <p />
+          <input type="checkbox" data-ng-model="agreeTerms" class="pull-left" required="required"> I agree to the <a href="javascript:void(0);" ng-click="showDialog('views/terms.html')">Terms of Use</a>
+      </section>
+    </div>
+    <div class="col-md-5">
+      <section class="checkboxtext spacer-bottom100">
+        <div class="right">
+          <button type="reset" ng-click="idmRedirectTo('/login');" class="btn-hp btn-RL spacer-fb">Cancel</button>
+          <button ng-disabled="appForm.$invalid" ng-click="registerUser()" class="btn-hp btn-RL spacer-fb">Submit</button>
+        </div>
+      </section>
+    </div>
+
+
+  </form>
+
+</div>
+

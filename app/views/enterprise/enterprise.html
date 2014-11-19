@@ -1,0 +1,16 @@
+<div class="container" ng-init="initPage()">
+  <div class="row">
+    <p class="lead">Enterprise Information</p>
+    
+    <div class="row">
+      <div class="col-md-2">
+        <img src="/img/enterprise_logos/hp_logo.jpg" alt="..." class="img-responsive">
+      </div>
+      <div class="col-md-9">
+        <h4>{{enterprise.companyInfo.legalName}}</h4>
+        {{enterprise.companyAddress.street}}<br />
+        {{enterprise.companyAddress.city}} {{enterprise.companyAddress.state}} {{enterprise.companyAddress.postalCode}}
+      </div>
+    </div>
+  </div>
+</div>

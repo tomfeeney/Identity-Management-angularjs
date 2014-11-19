@@ -1,0 +1,120 @@
+<div ng-controller="ServiceRoleController" ng-init="initServiceRoles()">
+
+  <div class="row spacer-between row">
+    <div class="col-md-4">
+      <select class="form-control" ng-model="selectedService" ng-options="s.name for s in services | orderBy:'name'" ng-change="loadServiceRoles()">
+        <option value="">- Select Service -</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <idm-search-box criteria="serviceRoleCriteria" placeholder="Search by role name" on-search="searchServiceRoles(serviceRoleCriteria)" search-disabled="isEmpty(selectedService)" />
+    </div>
+    <div class="col-md-3 pull-right">
+      <span class="spacer-between-xs hidden-lg"></span>
+      <button ng-click="addServiceRole()" class="btn-hp btn-large pull-right" ng-disabled="isEmpty(selectedService)"><span class="span glyphicon glyphicon-plus"></span> Add Service Role</button>
+    </div>
+  </div>
+
+  <div>
+    <table class="table table-hover idm-table">
+      <thead>
+        <tr>
+          <th>Role Name</th>
+          <th class="hidden-xs">Description</th>
+          <th class="ico_btn">Manage</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="role in pageServiceRoles">
+        <tr>
+          <td>{{role.role.name}}</td>
+          <td class="hidden-xs">{{role.role.description}}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Action <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu pull-right" role="menu">
+                <li><a href="javascript:void(0);" ng-click="updateServiceRole(role)"><span class="glyphicon glyphicon-wrench"></span> Update</a></li>
+                <li><a href="javascript:void(0);" ng-click="assignPermissions(role)"><span class="glyphicon glyphicon-plus"></span> Assign Permission</a></li>
+                <li><a href="javascript:void(0);" ng-click="deleteServiceRole(role)"><span class="glyphicon glyphicon-trash"></span> Remove</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <hr/>
+  <idm-pager on-select-page="setServiceRolePage(page)" match-items="matchServiceRoles" />
+
+</div>
+
+
+<script id="views/roles/serviceRole-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Service Role'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Service Role Information</h4>
+  <form name="SRForm" role="form">
+    <div class="form-group">
+      <label for="">Service Name</label>
+      <p class="form-control-static">{{data.service.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Role Name</label>
+      <input name="roleName" type="text" class="form-control" ng-model="data.role.name" idm-model-fixer ng-maxlength="100" required="required">
+      <p class="alert alert-info" ng-show="SRForm.roleName.$dirty && SRForm.roleName.$error.maxlength">Please enter no more than 100 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.role.description" idm-model-fixer ng-maxlength="300">
+      <p class="alert alert-info" ng-show="SRForm.description.$dirty && SRForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="SRForm.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/roles/serviceRole-permission-dlg.html" type="text/ng-template">
+<div class="modal-header" ng-init="initDialog()">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Assign Permissions</h4>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label for="">Service Role Name</label>
+      <p class="form-control-static">{{data.role.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.role.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Assigned Permissions</label>
+      <!-- idm-multi-check repeat-model="assignedPermissions" check-model="data.toBeRemovedPermissions" model-name="endpoint" criteria="assignedCriteria" search-hint="Filter by endpoint"><span class="hidden">item.endpoint + ' ' + item.operation</span></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeRemovedPermissions" ng-options="(r.endpoint + ' ' + r.operation) for r in assignedPermissions | orderBy:'endpoint'" size="8" multiple="multiple" ></select>
+    </div>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="addPermissions()">Assign <span class="glyphicon glyphicon-chevron-up"></span></button>
+      <span class="spacer-fb"></span>
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="removePermissions()">Remove <span class="glyphicon glyphicon-chevron-down"></span></button>
+    </div>
+    <div class="form-group">
+      <label for="">Available Permissions</label>
+      <!-- idm-multi-check repeat-model="availablePermissions" check-model="data.toBeAssignedPermissions" model-name="endpoint" criteria="availableCriteria" search-hint="Filter by endpoint"><span class="hidden">item.endpoint + ' ' + item.operation</span></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeAssignedPermissions" ng-options="(p.endpoint + ' ' + p.operation) for p in availablePermissions | orderBy:'endpoint'" size="8" multiple="multiple" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp">Submit</button>
+</div>
+</script>

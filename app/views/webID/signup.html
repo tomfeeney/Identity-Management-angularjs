@@ -1,0 +1,121 @@
+<!-- CREATE AN ACCOUNT-->
+<div class="gramidcontainer webid">
+
+  <form name='appForm' ng-controller="UserController" ng-init="initWebIdSignUp()" idm-form webid-signup-form>
+
+    <section>
+      <span class="logo"></span><span class="topright"><a id="loginLnk" href="" ng-click="idmRedirectTo('/')">Sign in</a> using HP Web ID</span>
+    </section>
+
+    <span class="hr"></span>
+
+    <section class="message">
+      Create an <b>HP Web ID</b> account
+    </section>
+
+    <section id="nameSection">
+      <div class="col-xs-6 no-padding signup-firstname">
+        <div class="webid-label">First Name</div>
+        <input id="firstName" name="firstName" class="form-control" type="text" ng-model="user.firstName" ng-disabled="!editEnabled('firstName')" placeholder="first name" ng-required="!optname" ng-maxlength="50" icon-type="1" idm-validator="name"/>
+        <span class="icon1" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.required" tooltip="Please enter first name." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+      </div>
+      <div class="col-xs-6 no-padding signup-lastname">
+        <div class="webid-label">Last Name</div>
+        <input id="lastName" name="lastName" class="form-control" type="text" ng-model="user.lastName" ng-disabled="!editEnabled('lastName')" placeholder="last name" ng-required="!optname" ng-maxlength="50" icon-type="1" idm-validator="name"/>
+        <span class="icon1" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.required" tooltip="Please enter last name." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Email</div>
+        <input class="form-control" name="email" type="email" ng-model="user.email" placeholder="email" ng-disabled="!editEnabled('email')" required="required" ng-maxlength="100" icon-type="1" idm-validator="email"></input>
+        <span class="icon1" ng-show="appForm.email.$dirty && appForm.email.$error.required" tooltip="Please enter email address." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.email.$dirty && appForm.email.$error.idmEmail" tooltip="Enter a valid email address." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.email.$dirty && appForm.email.$error.maxlength" tooltip="Please enter no more than 100 characters." tooltip-placement="left">&nbsp;</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Password</div>
+        <input name="password" class="form-control" type="password" ng-model="user.password" placeholder="password" required="true" ng-minlength="6" ng-maxlength="20" icon-type="1" auto-fill-sync></input>
+        <span class="icon1" ng-show="appForm.password.$dirty && appForm.password.$error.required" tooltip="Please enter new password." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.password.$dirty && (appForm.password.$error.maxlength || appForm.password.$error.minlength)" tooltip="Passwords must be 6-20 characters." tooltip-placement="left">&nbsp;</span>
+      </div>
+    </section>
+
+    <section id="confirmPasswordSection">
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Confirm Password</div>
+        <input name="passwordConfirm" class="form-control" type="password" ng-model="user.passwordConfirm" placeholder="confirm password" required="true" match="user.password" ng-minlength="6" ng-maxlength="20" icon-type="1"></input>
+        <span class="icon1" ng-show="appForm.passwordConfirm.$dirty && appForm.passwordConfirm.$error.required" tooltip="Please enter password." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.passwordConfirm.$error.mismatch" tooltip="Passwords must match." tooltip-placement="left">&nbsp;</span>
+      </div>
+    </section>
+    
+    <section ng-show="isMode('portal')">
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Security Question</div>
+        <select class="form-control" name="challengeQuestions"
+          id="challengeQuestions" data-ng-model="challengeQuestion"
+          data-ng-options="challengeQuestion.id as challengeQuestion.question for challengeQuestion in challengeQuestions | orderBy:'question'"
+          placeholder="Challenge Question">
+        </select>
+      </div>
+    </section>
+
+    <section ng-show="isMode('portal')">
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Security Answer</div>
+        <input name="answer" class="form-control" type="text" ng-model="user.answer" placeholder="Security Answer" icon-type="1" ng-required="isMode('portal')" ng-maxlength="50">
+        <span class="icon1" ng-show="appForm.answer.$dirty && appForm.answer.$error.required" tooltip="Please enter security answer." tooltip-placement="left">&nbsp;</span>
+        <span class="icon1" ng-show="appForm.answer.$dirty && appForm.answer.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+      </div>
+    </section>
+
+    <section ng-show="isMode('portal')">
+      <div class="col-xs-12 no-padding">
+        <div class="webid-label">Country</div>
+        <select class="form-control" name="countries" id="countries"
+          data-ng-model="country"
+          data-ng-options="country.code as country.name for country in countries | orderBy:'name'"
+          placeholder="Country" required="">
+        </select>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="col-xs-12 no-padding">
+        <input type="checkbox" data-ng-model="agreeTerms" class="pull-left form-control" required="required">
+        I agree to the <a href="javascript:void(0);" ng-click="showDialog(getEula())">Terms of Use</a>
+      </div>
+    </section>
+
+    <span class="hr"></span>
+
+    <section class="checkboxtext">
+      <div class="half">
+        <span class="caption">
+          What is an <a href="javascript:void(0);" ng-click="showDialog('/views/webID/whatis.html')">HP Web ID?</a>
+        </span>
+      </div>
+
+      <div class="half">
+        <div class="right">
+          <button ng-disabled="appForm.$invalid" ng-click="registerUser()" class="btn-hp btn-RL">Submit</button>
+        </div>
+      </div>
+    </section>
+
+  </form>
+
+</div>
+
+<div id="terms" class="popup" ng-include="getEula()">
+</div>

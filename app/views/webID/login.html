@@ -1,0 +1,47 @@
+<!-- LOG INTO ACCOUNT-->
+<div class="gramidcontainer">
+
+  <form name="loginForm" ng-controller="UserController" ng-init="initWebIdLogin()" id="loginForm">
+  
+    <!--input type="hidden" name="authProvider" value="{{authProvider}}" /-->
+  
+    <section>
+      <span class="logo"></span>
+      <span class="topright" ng-hide="emailReadonly || hasUrlParam('disable_signup')"><a id="registerLnk" href="" ng-click="idmRedirectTo('/signup')" translate>login.signup</a> {{ "login.for_webid" | translate}}</span>
+    </section>
+    
+    <span class="hr"></span>
+    
+    <section class="message" translate>login.secure_login</section>
+
+    <section>
+      <div class="webid-label">Email</div>
+      <input name="username" type="email" placeholder="{{'login.email' | translate}}" tabindex="1" autocorrect="off" autocapitalize="off" ng-model="email" required="required" ng-readonly="emailReadonly" auto-fill-sync>
+    </section>
+
+    <section>
+      <div class="webid-label">Password</div>
+      <input name="password" type="password" placeholder="{{'login.password' | translate}}" tabindex="2" ng-model="password" required="" auto-fill-sync>
+    </section>
+    
+    <span class="hr"></span>
+
+    <section class="spacer-bottom">
+      <div class="half">
+        <a id="forgotLnk" href="" ng-click="idmRedirectTo('/passwordreset')" translate>login.forgot_password</a>
+        <!-- a href="javascript:void(0);" ng-controller="LoginController" ng-click="loginGoogle()" class="google oauth_login btn-RL">
+          <img src="/img/google-plus-24.png"> Google +
+        </a -->
+      </div>
+      <div class="half">
+        <div class="right">
+          <button type="submit" class="btn-hp btn-RL" ng-disabled="!loginForm.$valid" data-ng-click="login()" tabindex="4" translate>common.ok</button>
+          <button type="reset" class="btn-hp btn-RL btn-2nd" ng-disabled="granting" ng-click="cancelWebId()" tabindex="5" translate>common.cancel</button>
+        </div>
+      </div>
+    </section>
+
+  </form>
+  
+</div>
+<!-- END LOG INTO ACCOUNT-->

@@ -1,0 +1,58 @@
+<!-- Email Confirmation -->
+<div class="gramidcontainer" ng-init="initEmailConfirm()">
+  <section>
+    <span class="logo"></span>
+  </section>
+  <span class="hr"></span>
+  <section>
+    <h3>HP Web ID Verification</h3>
+  </section>
+  <section>
+    <div ng-show='confirmShow === "verifyEmail"'>
+      <h2>Thank you, your email is now verified.</h2>
+      <section>
+        <div>
+          <p>HP Web ID: {{email}}</p>
+        </div>
+      </section>
+    </div>
+    <div ng-show='confirmShow === "confirmEmail"'>
+      <h2>Your HP Web ID email has been changed.</h2>
+      <section>
+        <div>
+          <p>Your email address has been successfully changed from
+            {{oldEmail}}
+            to
+            {{email}}.
+          </p>
+        </div>
+      </section>
+    </div>
+    <div ng-show='confirmShow === "error"'>
+      <h2>We are unable to verify your email</h2>
+      <section>
+        <div>
+          <p>The verification link may have already been expired. Please use the newest link to verify or resend the verify email. </p>
+        </div>
+      </section>
+    </div>
+    <div ng-show='confirmShow === "alreadyVerified"'>
+      <h2>We are unable to verify your email</h2>
+      <section>
+        <div>
+          <p>The verification link may have already been verified.</p>
+        </div>
+      </section>
+    </div>
+    <div ng-show='confirmShow === "verifying"'>
+      <h2>Email Verification</h2>
+      <section>
+        <div>
+          <p>Verifying Information.</p>
+        </div>
+      </section>
+    </div>
+
+  </section>
+
+</div>

@@ -1,0 +1,13 @@
+<div class="container" ng-init="initPage()">
+  <div class="row spacer-bottom100">
+    <p class="lead">Roles & Permissions</p>
+    <tabset>
+      <tab heading="Products" select="selectTab('products')"></tab>
+      <tab heading="Services" select="selectTab('services')"></tab>
+      <tab heading="Product Roles" select="selectTab('productRoles')"></tab>
+      <tab heading="Service Roles" select="selectTab('serviceRoles')"></tab>
+      <tab heading="Permissions" select="selectTab('permissions')"></tab>
+    </tabset>
+    <div ng-include="templatePath" class="col-md-12"></div>
+  </div>
+</div>

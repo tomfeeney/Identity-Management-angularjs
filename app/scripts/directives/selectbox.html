@@ -1,0 +1,11 @@
+<div class="input-group-btn">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    {{selectedOption.label}} <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li ng-repeat="opt in options" ng-class="{ active: selectedOption == opt }">
+      <a href="javascript:void(0);" ng-click="selectOption(opt)"><span>{{opt.label}}</span></a>
+    </li>
+  </ul>
+  <div class="hidden idm-selectbox-transclude" ng-transclude></div>
+</div>

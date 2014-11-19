@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row">
+  
+    <p class="lead">Device Management</p>
+
+    <div ng-controller="DeviceController" ng-init="initDevices()">
+    
+      <div class="row spacer-between">
+        <div class="col-md-4">
+          <idm-search-box criteria="deviceCriteria" placeholder="Search by device name" on-search="searchDevices(deviceCriteria, filterCriteria)" />
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" ng-model="filterCriteria" ng-options="k as v for (k,v) in deviceFamilies" ng-change="searchDevices(deviceCriteria, filterCriteria)">
+            <option value="">- Filter by Family -</option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="table-responsive">
+        <table class="table-responsive table-hover idm-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="hidden-xs">Family</th>
+              <th class="hidden-xs">Model</th>
+              <th class="hidden-xs">Device ID</th>
+              <th class="hidden-xs">OS</th>
+              <th class="ico_btn">Manage</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="device in pageDevices">
+            <tr>
+              <td>{{device.deviceName}}</td>
+              <td>{{device.deviceType}}</td>
+              <td class="hidden-xs">{{device.deviceFamily}}</td>
+              <td class="hidden-xs">{{device.deviceModel}}</td>
+              <td class="hidden-xs">{{device.deviceID}}</td>
+              <td class="hidden-xs">{{device.webOSDisplayName}}</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="javascript:void(0);" ng-click="assignDeviceName(device)"><span class="glyphicon glyphicon-wrench"></span> Assign Device Name</a></li>
+                    <li><a href="javascript:void(0);" ng-click="dissociateDevice(device)"><span class="glyphicon glyphicon-trash"></span> Dissociate Device</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <hr/>
+      <idm-pager on-select-page="setDevicePage(page)" match-items="matchDevices" />
+    
+    </div>
+
+  </div>
+</div>
+
+<script id="views/devices/device-dlg.html" type="text/ng-template">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Device</h4>
+  </div>
+  <div class="modal-body">
+    <h4 class="idm-dialog-title">Device Information</h4>
+    <form name="deviceForm" role="form">
+      <div class="form-group">
+        <label for="">Device Name</label>
+        <input name="deviceName" type="text" class="form-control" ng-model="data.deviceName" idm-model-fixer required="required" ng-maxlength="100">
+        <p class="alert alert-info" ng-show="deviceForm.deviceName.$dirty && deviceForm.deviceName.$error.maxlength">Please enter no more than 100 characters.</p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+    <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="deviceForm.$invalid">Submit</button>
+  </div>
+</script>

@@ -1,0 +1,10 @@
+<div class="container" ng-init="initPage()">
+  <div class="row">
+    <p class="lead">Customer Entity</p>
+    <tabset>
+      <tab heading="Customer Entities" select="selectTab('customers')"></tab>
+      <tab heading="Users" select="selectTab('users')"></tab>
+    </tabset>
+    <div ng-include="templatePath" class="col-md-12"></div>
+  </div>
+</div>

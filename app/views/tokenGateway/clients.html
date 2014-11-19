@@ -1,0 +1,254 @@
+
+<!-- NOTE - coding update required for this page -->
+
+<div class="container" ng-init="initPage()">
+  <div class="row">
+    <p class="lead">Token Gateway Clients</p>
+
+    <div class="row">
+      <div class="col-md-9">
+        <h4>{{enterprise.companyInfo.legalName}}</h4>
+        {{enterprise.companyAddress.street}}<br />
+        {{enterprise.companyAddress.city}} {{enterprise.companyAddress.state}} {{enterprise.companyAddress.postalCode}}
+      </div>
+    </div>
+
+    <div ng-init="initClients()">
+    
+      <div class="row spacer-between">
+        <div class="col-md-4">
+          <idm-search-box criteria="searchCriteria" placeholder="Search by client id" on-search="searchClients(searchCriteria)" />
+        </div>
+        <div class="col-md-3 col-md-offset-4 pull-right">
+          <span class="spacer-between-xs hidden-lg"></span>
+          <a href="javascript:void(0);" ng-click="addClientDlg()" class="btn-hp btn-large pull-right"><span class="span glyphicon glyphicon-plus"></span> Add Client</a>
+        </div>
+      </div>
+    
+      <div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Client Id</th>
+              <th class="hidden-xs">Description</th>
+              <th class="hidden-xs">Client Type</th>
+              <th class="ico_btn">Manage</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="client in clients">
+            <tr>
+              <td>{{client.clientInfo.clientId}}</td>
+              <td class="hidden-xs">{{client.clientInfo.descriptions[0].description}}</td>
+              <td class="hidden-xs">{{client.clientInfo.clientType}}</td>
+
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="javascript:void(0);" ng-click="viewClientDlg(client)"><span class="glyphicon glyphicon-wrench"></span> View</a></li>
+                    <li><a href="javascript:void(0);" ng-click="updateClientDlg(client)"><span class="glyphicon glyphicon-wrench"></span> Update</a></li>
+                    <li><a href="javascript:void(0);" ng-click="removeClient(client.clientInfo)"><span class="glyphicon glyphicon-trash"></span> Remove</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <hr/>
+      <pagination on-select-page="setClientsPage(page)" ng-show="true" total-items="totalClientsNr" page="currentPage" items-per-page="10" class="pagination pull-right" max-size="5" rotate="false"></pagination>
+    
+    </div>
+    
+  </div>
+</div>
+
+<!-- start modals -->
+<!-- code taken from Groups.html NOTE replace group specific code with tokenGateway code as needed
+  example:
+  <input name="groupName" type="text" class="form-control" ng-model="data.group.name"
+  replace group with apporprate tokenGateway naming!
+  -->
+
+
+<script id="views/tokenGateway/client-view-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'View Client'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Client Information</h4>
+  <form name="clientForm" role="form">
+    <div class="form-group">
+      <label for="">Client Id</label>
+      <input name="clientId" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.clientId" idm-model-fixer required="required" ng-maxlength="100">
+      <p class="alert alert-info" ng-show="groupForm.groupName.$dirty && groupForm.groupName.$error.maxlength">Please enter no more than 100 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Client Name</label>
+      <input name="name" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.descriptions[0].name" idm-model-fixer ng-maxlength="300">
+      <p class="alert alert-info" ng-show="groupForm.description.$dirty && groupForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.descriptions[0].description" idm-model-fixer ng-maxlength="300">
+      <p class="alert alert-info" ng-show="groupForm.description.$dirty && groupForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="">Token Expiration</label>
+      <input name="name" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.tokenExpiration" idm-model-fixer ng-maxlength="300">
+      <p class="alert alert-info" ng-show="groupForm.description.$dirty && groupForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="">Locale</label>
+      <input name="countries" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.descriptions[0].locale" idm-model-fixer ng-maxlength="300">
+    </div>
+    
+    <!-- client type dropdown menu goes here - code needed -->
+    <div class="form-group">
+      <label for="">Client Type</label>
+      <input name="clientType" ng-disabled="true" type="text" class="form-control" ng-model="data.client.clientInfo.clientType" idm-model-fixer ng-maxlength="300">
+    </div>
+    <div class="form-group" ng-if="data.client.clientInfo.tokenRefreshPolicy">
+      <input type="checkbox" ng-disabled="true" ng-model="data.client.clientInfo.tokenRefreshPolicy"> Token Refresh Policy
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group" ng-if="data.client.clientInfo.isManagedInstance">
+      <input type="checkbox" ng-disabled="true" ng-model="data.client.clientInfo.isManagedInstance"> Is Managed Instance
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group" ng-if="data.client.clientInfo.needsGrantConfirmation">
+      <input type="checkbox" ng-disabled="true" ng-model="data.client.clientInfo.needsGrantConfirmation"> Needs Grant Confirmation
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group">
+      <p>Permissions</p>
+      <div ng-repeat="permission in data.client.clientInfo.permissions">
+          <input  type="checkbox" 
+                  ng-disabled="true"
+                  ng-checked="true"
+                  ng-model="permission"
+                  value="{{permission}}">{{permission}}<br />
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="">Redirect Uris</label>
+        <textarea class="form-control" ng-disabled="true" rows="3" placeholder="Redirect Uris should be comma seperated" ng-model="data.client.clientInfo.redirectUris" tabindex="2"/></textarea>
+    </div>
+    
+
+    <!-- grant flow dropdown menu goes here - code needed -->
+    <div class="form-group">
+      <label for="">Grant Flow</label>
+      <input name="grantFlow" ng-disabled="true" type="text" class="form-control" ng-model="data.grantFlows[data.client.clientInfo.grantFlow]" idm-model-fixer ng-maxlength="300">
+    </div>
+    
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" ng-click="cancel()" class="btn btn-hp" ng-disabled="groupForm.$invalid">Close</button>
+</div>
+</script>
+
+<script id="views/tokenGateway/client-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Client'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Client Information</h4>
+  <form name="clientForm" role="form">
+    <div class="form-group">
+      <label for="">Client Id</label>
+      <input name="clientId" ng-disabled="data.isUpdateClient" type="text" class="form-control" ng-model="data.client.clientInfo.clientId" idm-model-fixer required="required" ng-maxlength="100">
+      <p class="alert alert-info" ng-show="clientForm.clientId.$dirty && clientForm.clientId.$error.maxlength">Please enter no more than 100 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Client Name</label>
+      <input name="name" type="text" class="form-control" ng-model="data.client.clientInfo.descriptions[0].name" idm-model-fixer ng-maxlength="300" required="required">
+      <p class="alert alert-info" ng-show="clientForm.name.$dirty && clientForm.name.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.client.clientInfo.descriptions[0].description" idm-model-fixer ng-maxlength="300" required="required">
+      <p class="alert alert-info" ng-show="clientForm.description.$dirty && clientForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="">Token Expiration</label>
+      <input name="tokenExpiration" type="number" class="form-control" ng-model="data.client.clientInfo.tokenExpiration" required="required">
+      <p class="alert alert-info" ng-show="clientForm.tokenExpiration.$dirty && clientForm.tokenExpiration.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="">Locale</label>
+      <select name="countries" id="countries"
+        ng-model="data.client.clientInfo.descriptions[0].locale" class="form-control"
+        ng-options="code for code in data.localeCodes"
+        placeholder="Country">
+      </select>
+    </div>
+    
+    <!-- client type dropdown menu goes here - code needed -->
+    <div class="form-group">
+      <label for="">Client Type</label>
+      <select class="form-control" ng-model="data.client.clientInfo.clientType" ng-options="t for t in data.clientTypes" />
+    </div>
+    <div class="form-group">
+      <input type="checkbox" ng-model="data.client.clientInfo.tokenRefreshPolicy"> Token Refresh Policy
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group">
+      <input type="checkbox" ng-model="data.client.clientInfo.isManagedInstance"> Is Managed Instance
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group">
+      <input type="checkbox" ng-model="data.client.clientInfo.needsGrantConfirmation"> Needs Grant Confirmation
+    </div>
+    
+    <span class="hr"></span>
+    
+    <div class="form-group">
+      <p>Permissions</p>
+      <div ng-repeat="permission in data.permissions">
+          <input  type="checkbox" 
+                  ng-checked="data.client.clientInfo.permissions.indexOf(permission) > -1"
+                  ng-click="toggleSelection(data.client.clientInfo.permissions, permission)" value="{{permission}}">{{permission}}<br />
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="">Redirect Uris</label>
+        <textarea class="form-control" rows="3" placeholder="Redirect Uris should be comma seperated" ng-model="data.client.clientInfo.redirectUris" tabindex="2"/></textarea>
+    </div>
+    
+    
+    <!-- grant flow dropdown menu goes here - code needed -->
+    <div class="form-group">
+      <label for="">Grant Flow</label>
+      <select class="form-control" ng-model="data.client.clientInfo.grantFlow" ng-options="k as v for (k,v) in data.grantFlows" />
+    </div>
+    
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="clientForm.$invalid">Submit</button>
+</div>
+</script>

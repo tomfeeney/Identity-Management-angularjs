@@ -1,0 +1,186 @@
+/** CSS for Management Portal **/
+h4 {
+  margin: 0px;
+}
+
+h5,.h5 {
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.container-enterprise-top {
+  background-color: #b3b3bc;
+  border-radius: 4px 4px 0 0;
+  margin: 0px;
+}
+
+.container-enterprise-top h1 {
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 15px;
+}
+
+.container-enterprise {
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #e0e0eb;
+  border-right: 1px solid #b3b3bc;
+  border-left: 1px solid #b3b3bc;
+  border-bottom: 1px solid #b3b3bc;
+  border-radius: 0 0 4px 4px;
+}
+
+.container-enterprise p {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  padding: 5px 10px;
+}
+
+.container-enterprise.ul {
+  line-height: 2.0;
+}
+
+.container-enterprise.dt {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.container-enterprise.dd {
+  padding: 10px;
+  margin: 10px 0 10px 0;
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.push-right {
+  padding-right: 15px;
+}
+
+.list-group {
+  margin: 5px 0 5px 0;
+}
+
+.list-group-item {
+  background: none;
+  border: none;
+  padding: 2px 0px;
+}
+
+.img-enterprise {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #cccccc;
+}
+
+.cmpny-info {
+  padding-top: 20px;
+}
+
+.entrpris {
+  padding: 5px 0 5px 0;
+  border-bottom: 1px solid #cccccc;
+  margin: 0 0 15px 0;
+}
+
+.stacked {
+  padding: 10px 0 5px 0;
+}
+
+.btn-groups {
+  margin: 0 5px 5px 5px;
+}
+
+.tree {
+  font-family: "HP Simplified", Arial;
+  list-style: none;
+}
+/** tables **/
+.tblTitle {
+  text-align: center;
+}
+
+.table thead>tr>th {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+.table thead>tr>th,.table tbody>tr>th,.table tfoot>tr>th,.table thead>tr>td,.table tbody>tr>td,.table tfoot>tr>td
+  {
+  border-top: none;
+}
+
+/** user btns **/
+.addUser {
+  padding-left: 0;
+  margin: 20px 0;
+  text-align: center;
+  list-style: none;
+}
+
+.addUser:before,.addUser:after {
+  display: table;
+  content: " ";
+}
+
+.addUser:after {
+  clear: both;
+}
+
+.addUser:before,.addUser:after {
+  display: table;
+  content: " ";
+}
+
+.addUser:after {
+  clear: both;
+}
+
+.addUser li {
+  padding: 10px 0 10px 0;
+  /** display: inline; **/
+}
+
+.addUser li>a,.addUser li>span {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
+
+.addUser li>a:hover,.addUser li>a:focus {
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+
+.addUser .next>a,.addUser .next>span {
+  float: right;
+}
+
+.addUser .previous>a,.addUser .previous>span {
+  float: left;
+}
+
+.addUser .disabled>a,.addUser .disabled>a:hover,.addUser .disabled>a:focus,.addUser .disabled>span
+  {
+  color: #999999;
+  cursor: not-allowed;
+  background-color: #ffffff;
+}
+
+#assignUser .modal-dialog,#assignSubGroup .modal-dialog {
+  width: 1000px;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-dialog.large {
+    right: auto;
+    width: 800px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}

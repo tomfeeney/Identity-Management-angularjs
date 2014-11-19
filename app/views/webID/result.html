@@ -1,0 +1,18 @@
+<div class="gramidcontainer">
+
+  <section>
+    <span class="logo"></span><span class="topright"><!-- a ng-href="#/profile?token={{result.access_token}}&email={{result.email}}">Profile</a --></span>
+  </section>
+  
+  <span class="hr"></span>
+  
+  <div ng-init="initResult()">
+    <dl class="dl-horizontal" ng-repeat="(key, value) in result"> 
+      <dt class="force-wrap">{{key}}:</dt>
+      <dd>{{value | decode}}</dd>
+    </dl>
+  </div>
+  
+  
+
+</div>

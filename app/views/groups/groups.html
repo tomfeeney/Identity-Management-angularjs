@@ -1,0 +1,240 @@
+<div class="container" ng-init="initPage()">
+  <div class="row">
+    <p class="lead">Enterprise Groups</p>
+    
+    <div ng-init="initGroups()">
+    
+      <div class="row spacer-between">
+        <div class="col-md-4">
+          <idm-search-box criteria="groupCriteria" placeholder="Search by group name" on-search="searchGroups(groupCriteria)" />
+        </div>
+        <div class="col-md-3 col-md-offset-4 pull-right">
+          <span class="spacer-between-xs hidden-lg"></span>
+          <a href="javascript:void(0);" ng-click="addGroupDlg()" class="btn-hp btn-large pull-right"><span class="span glyphicon glyphicon-plus"></span> Add Group</a>
+        </div>
+      </div>
+    
+      <div>
+        <table class="table table-hover idm-table">
+          <thead>
+            <tr>
+              <th>Group Name</th>
+              <th class="hidden-xs">Description</th>
+              <th class="hidden-xs">Scope</th>
+              <th class="hidden-xs">Visibility</th>
+              <th class="hidden-xs">Membership</th>
+              <th class="ico_btn">Manage</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="group in pageGroups">
+            <tr>
+              <td>{{group.name}}</td>
+              <td class="hidden-xs">{{group.description}}</td>
+              <td class="hidden-xs">{{group.scope}}</td>
+              <td class="hidden-xs">{{group.visibility}}</td>
+              <td class="hidden-xs">{{group.membership}}</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="javascript:void(0);" ng-click="updateGroupDlg(group)"><span class="glyphicon glyphicon-wrench"></span> Update</a></li>
+                    <li><a href="javascript:void(0);" ng-click="assignUsers(group)"><span class="glyphicon glyphicon-user"></span> Assign Users</a></li>
+                    <li><a href="javascript:void(0);" ng-click="assignSubGroups(group)"><span class="glyphicon glyphicon-plus"></span> Assign Sub Groups</a></li>
+                    <li><a href="javascript:void(0);" ng-click="removeGroup(group)"><span class="glyphicon glyphicon-trash"></span> Remove</a></li>
+                    <li><a href="javascript:void(0);" ng-click="assignProductRoles(group)"><span class="glyphicon glyphicon-plus"></span> Assign Product Roles</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <hr/>
+      <idm-pager on-select-page="setGroupPage(page)" match-items="matchGroups" />
+    
+    </div>
+    
+  </div>
+</div>
+
+<script id="views/groups/group-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">{{data.title || 'Create Group'}}</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Group Information</h4>
+  <form name="groupForm" role="form">
+    <div class="form-group">
+      <label for="">Group Name</label>
+      <input name="groupName" type="text" class="form-control" ng-model="data.group.name" idm-model-fixer required="required" ng-maxlength="100">
+      <p class="alert alert-info" ng-show="groupForm.groupName.$dirty && groupForm.groupName.$error.maxlength">Please enter no more than 100 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <input name="description" type="text" class="form-control" ng-model="data.group.description" idm-model-fixer ng-maxlength="300">
+      <p class="alert alert-info" ng-show="groupForm.description.$dirty && groupForm.description.$error.maxlength">Please enter no more than 300 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Tags</label>
+      <input name="tags" type="text" class="form-control" ng-model="data.group.tags" idm-model-fixer ng-maxlength="32">
+      <p class="alert alert-info" ng-show="groupForm.tags.$dirty && groupForm.tags.$error.maxlength">Please enter no more than 32 characters.</p>
+    </div>
+    <div class="form-group">
+      <label for="">Visibility</label>
+      <select class="form-control" ng-model="data.group.visibility" ng-options="k as v for (k,v) in data.visibilities" ng-disabled="data.mode == 'edit'" />
+    </div>
+    <div class="form-group">
+      <label for="">Membership</label>
+      <select class="form-control" ng-model="data.group.membership" ng-options="k as v for (k,v) in data.memberships" ng-disabled="data.mode == 'edit'" />
+    </div>
+    <div class="form-group">
+      <label for="">Scope</label>
+      <select class="form-control" ng-model="data.group.scope" ng-options="k as v for (k,v) in data.scopes" ng-disabled="data.mode == 'edit'" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" ng-disabled="groupForm.$invalid">Submit</button>
+</div>
+</script>
+
+<script id="views/groups/group-users-dlg.html" type="text/ng-template">
+<div class="modal-header" ng-init="initDialog()">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Add/Remove Users</h4>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label for="">Group</label>
+      <p class="form-control-static">{{data.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Assigned Users</label>
+      <!-- idm-multi-check repeat-model="groupUsers" model-id="userAccountId" order-by-fn="getUserDisplayName" check-model="data.toBeRemovedUsers" criteria="assignedCriteria" search-by-fn="getUserDisplayName" search-hint="Filter by user name"><span class="hidden">getUserDisplayName(item)</span></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeRemovedUsers" ng-options="getUserDisplayName(u) for u in groupUsers | orderBy:getUserDisplayName" size="8" multiple="true" />
+    </div>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="addUsers()">Assign <span class="glyphicon glyphicon-chevron-up"></span></button>
+      <span class="spacer-fb"></span>
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="removeUsers()">Remove <span class="glyphicon glyphicon-chevron-down"></span></button>
+    </div>
+    <div class="form-group">
+      <label for="">Available Users</label>
+      <div class="input-group sm-margin-v user-search-pager">
+        <select idm-select-box ng-model="availableSearchBy" ng-init="availableSearchBy = 'firstName'" ng-change="availableUserCriteria = ''">
+          <option value="firstName">First Name</option>
+          <option value="lastName">Last Name</option>
+          <option value="email">Email</option>
+          <option value="title">Title</option>
+        </select>
+        <input type="text" class="form-control" ng-model="availableUserCriteria" placeholder="Search user by {{availableSearchBy.label}}" />
+        <span class="input-group-btn">
+          <button class="btn btn-default idm-multi-check-all-clear" type="button" ng-click="setAvailableUserPage(1, availableSearchBy, availableUserCriteria)"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+      </div>
+      <!-- idm-multi-check repeat-model="availableUsers" model-id="userAccountId" check-model="data.toBeAssignedUsers" criteria="availableCriteria" search-by-fn="getUserDisplayName" search-hint="Filter by user name"><span class="hidden">getUserDisplayName(item)</span></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeAssignedUsers" ng-options="getUserDisplayName(u) for u in availableUsers" size="8" multiple="true" />
+      <div class="sm-margin-v idm-firefox-width-fixer">
+        <pager on-select-page="setAvailableUserPage(page, availableSearchBy, availableUserCriteria)" total-items="pageInfo.totalCount" page="currentPage" items-per-page="usersPerPage"
+          align="false" class="pager no-margin idm-inline pager-lg pull-right idm-multi-check-all-clear" />
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp" >Submit</button>
+</div>
+</script>
+
+<script id="views/groups/group-subgroups-dlg.html" type="text/ng-template">
+<div class="modal-header" ng-init="initDialog()">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Add/Remove Sub Groups</h4>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label for="">Group</label>
+      <p class="form-control-static">{{data.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Assigned Groups</label>
+      <!-- idm-multi-check repeat-model="assignedGroups" check-model="data.toBeRemovedGroups" criteria="assignedCriteria" search-hint="Filter by group name"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeRemovedGroups" ng-options="g.name for g in assignedGroups | orderBy:'name'" size="8" multiple="true" />
+    </div>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="addGroups()">Assign <span class="glyphicon glyphicon-chevron-up"></span></button>
+      <span class="spacer-fb"></span>
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="removeGroups()">Remove <span class="glyphicon glyphicon-chevron-down"></span></button>
+    </div>
+    <div class="form-group">
+      <label for="">Available Groups</label>
+      <!-- idm-multi-check repeat-model="availableGroups" check-model="data.toBeAssignedGroups" criteria="availableCriteria" search-hint="Filter by group name"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeAssignedGroups" ng-options="g.name for g in availableGroups | orderBy:'name'" size="8" multiple="true"/>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp">Submit</button>
+</div>
+</script>
+
+<script id="views/groups/group-productRoles-dlg.html" type="text/ng-template">
+<div class="modal-header" ng-init="initDialog()">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Assign Product Roles</h4>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label for="">Group</label>
+      <p class="form-control-static">{{data.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Assigned Product Roles</label>
+      <!-- idm-multi-check repeat-model="assignedRoles" check-model="data.toBeRemovedRoles" model-id="role.id" model-name="role.name" criteria="assignedCriteria" search-hint="Filter by role name"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeRemovedRoles" ng-options="g.role.name for g in assignedRoles | orderBy:'role.name'" size="8" multiple="true"></select>
+    </div>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="addRoles()">Assign <span class="glyphicon glyphicon-chevron-up"></span></button>
+      <span class="spacer-fb"></span>
+      <button type="button" class="btn btn-default spacer-between-xs idm-multi-check-all-clear" ng-click="removeRoles()">Remove <span class="glyphicon glyphicon-chevron-down"></span></button>
+    </div>
+    <div class="form-group">
+      <label for="">Products</label>
+      <select class="form-control idm-multi-check-all-clear" ng-model="selectedProduct" ng-options="p.name for p in data.products | orderBy:'name'" ng-change="loadProductRoles(selectedProduct)">
+        <option value="">- Select -</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Available Product Roles</label>
+      <!-- idm-multi-check repeat-model="availRoles" check-model="data.toBeAssignedRoles" model-id="role.id" model-name="role.name" criteria="availableCriteria" search-hint="Filter by role name"></idm-multi-check -->
+      <select class="form-control idm-multi-select" ng-model="data.toBeAssignedRoles" ng-options="r.role.name for r in availRoles | orderBy:'role.name'" size="8" multiple="true" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp">Submit</button>
+</div>
+</script>

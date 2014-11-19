@@ -1,0 +1,225 @@
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+            <h3 class="title-details">User Details</h3>
+        </div>
+    </div>
+
+    <form name='appForm' ng-controller="UserController" ng-init="initSignup()" id="appForm">
+        <div class="row">
+            <div class="col-xs-3 col-sm-2 col-lg-2">
+                <h4>{{user.name}} User Name</h4>
+            </div>
+
+            <div class="col-xs-6 col-sm-7 col-lg-8">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <h5>Group Description:</h5>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        The quick brown fox jumps over the lazy dog
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        &nbsp;
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <h5>Group Tags:</h5>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        Group tage1, group tage2, group tage3
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3 col-sm-3 col-lg-2">
+              
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+        <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th class="tblTitle">Users</th>
+            <th class="tblTitle">&nbsp;</th>
+            <th class="tblTitle">Users in Group</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-xs-4 col-sm-4 col-lg-4">
+                <select size="10">
+                    <option>Beasley, Cole</option>
+                    <option>Dunbar, Lance</option>
+                    <option>Escobar, Gavin</option>
+                    <option>Hanna, James</option>
+                    <option>Harris, Dwayne</option>
+                    <option>Orton, Kyle</option>
+                    <option>Smith, Andre</option>
+                    <option>Tanner, Phillip</option>
+                </select>
+            </td>
+            <td class="col-xs-4 col-sm-4 col-lg-4">
+                
+                <ul class="addUser">
+                    <li><a href="#">Add User(s) <span class="glyphicon glyphicon-arrow-right"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-arrow-left"></span> Remove User(s)</a></li>
+                    <li><button ng-disabled="appForm.$invalid" ng-click="registerUser()" class="btn-hp">Submit</button></li>
+                </ul>
+            </td>
+            <td class="col-xs-4 col-sm-4 col-lg-4">
+                <select size="10">
+                    <option>Beasley, Cole</option>
+                    <option>Dunbar, Lance</option>
+                    <option>Escobar, Gavin</option>
+                    <option>Hanna, James</option>
+                    <option>Harris, Dwayne</option>
+                    <option>Orton, Kyle</option>
+                    <option>Smith, Andre</option>
+                    <option>Tanner, Phillip</option>
+                </select>
+            </td>
+            </tr>
+          <tr>
+          </tr>
+         </tbody>
+    </table>
+    
+    <table class="table">
+        <tbody>
+          <tr>
+            
+            <td class="col-xs-12 col-sm-12 col-lg-12 tblTitle">
+                <p>You about to move user {{userName}} to Group {{groupName}}</p>
+                <p>You about to remove user {{userName)) from Group {{groupName}}</p>
+            </td>
+            
+            </tr>
+          <tr>
+          </tr>
+         </tbody>
+    </table>
+            
+        </div>
+        </div>
+
+    <hr>
+
+
+<ul class="list-unstyled container-enterprise">
+    <li>
+        <dt><span class="glyphicon glyphicon-folder-open push-right"></span> Enterprise with Description, Groups & SubGroups</dt>
+            <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                
+    </li>
+            <ul class="list-unstyled">
+                <li>
+                <dt><span class="glyphicon glyphicon-list push-right"></span> Group 1 with Description & SubGroups</dt>
+                        <dd><p>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi.</p>
+                        <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 1</li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 2</li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 3</li>
+                        </ul>
+                        </dd>
+                </li>
+                <li>
+                <dt><span class="glyphicon glyphicon-pushpin push-right"></span> Group 2 without Description</dt>
+                
+                    <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 1</li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 2</li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 3</li>
+                    </ul>
+                </li>
+                <li>
+                    <dt><span class="glyphicon glyphicon-pushpin push-right"></span> Group 3 with Description & SubGroups</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                
+                    <ul class="list-unstyled">
+                        <li>
+                            <dt><span class="glyphicon glyphicon-send push-right"></span> SubGroup 1</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                        </li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 2</li>
+                        <li><span class="glyphicon glyphicon-send push-right"></span> SubGroup 3</li>
+                            <ul class="list-unstyled">
+                                <li><span class="glyphicon glyphicon-tower push-right"></span> SubSubGroup 1</li>
+                                <li><span class="glyphicon glyphicon-tower push-right"></span> SubSubGroup 2</li>
+                                <li><span class="glyphicon glyphicon-tower push-right"></span> SubSubGroup 3</li>
+                            </ul>
+                    </ul>
+                </li>
+                <li>
+                    <dt><span class="glyphicon glyphicon-pushpin push-right"></span> Group 4 with Description</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                </li>
+            </ul>
+    </li>
+</ul>
+
+
+    <hr>
+
+
+<ul class="list-unstyled">
+    <li>
+        <dt><span class="glyphicon glyphicon-folder-open push-right"></span> Enterprise - with Description, Groups & SubGroups</dt>
+            <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                
+    </li>
+            <ul>
+                <li>
+                <dt>Group 1 - with Description & SubGroups</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                
+                    <ul>
+                        <li>SubGroup 1</li>
+                        <li>SubGroup 2</li>
+                        <li>SubGroup 3</li>
+                    </ul>
+                </li>
+                <li>
+                <dt>Group 2 - without Description</dt>
+                
+                    <ul>
+                        <li>SubGroup 1</li>
+                        <li>SubGroup 2</li>
+                        <li>SubGroup 3</li>
+                    </ul>
+                </li>
+                <li>
+                    <dt>Group 3 - with Description & SubGroups</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                
+                    <ul>
+                        <li>
+                            <dt>SubGroup 1</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                        </li>
+                        <li>SubGroup 2</li>
+                        <li>SubGroup 3</li>
+                            <ul>
+                                <li>SubSubGroup 1</li>
+                                <li>SubSubGroup 2</li>
+                                <li>SubSubGroup 3</li>
+                            </ul>
+                    </ul>
+                </li>
+                <li>
+                    <dt>Group 4 - with Description</dt>
+                        <dd>Cras vel ipsum a magna luctus laoreet. Nullam et arcu. Phasellus pede enim, fringilla non, egestas et, vulputate sit amet, nisi. Vivamus dapibus tristique eros. Donec facilisis varius nulla. Morbi non turpis.</dd>
+                </li>
+            </ul>
+    </li>
+</ul>
+
+

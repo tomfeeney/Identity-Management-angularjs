@@ -1,0 +1,260 @@
+/****** begin HPE typography CSS (typography.css) ******/
+
+/* HPE screenreader exclusive text */
+.screenReading,
+.hpui-screenreader-text {
+	FONT-SIZE: 0px;
+	OVERFLOW: hidden;
+	WIDTH: 0px;
+	POSITION: absolute;
+	HEIGHT: 0px;
+	OUTLINE: 0px;
+}
+
+/*** HPE primary text ***/
+
+/* HPE primary level 1 basic text */
+.hpui-primary-text1 {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	font-weight: normal;
+	color: #000;
+	line-height: 22px;
+}
+
+/* HPE primary level 2 basic text */
+.hpui-primary-text2 {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	font-weight: normal;
+	color: #5A5A5A;
+	line-height: 22px;
+}
+
+/* HPE primary level 3 basic text */
+.hpui-primary-text3 {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	font-weight: normal;
+	color: #767676;
+	line-height: 22px;
+}
+
+/* HPE headings: only for h1 through h6 */
+h1.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 32px;
+	line-height: 32px;
+	font-weight: bold;
+	color: #000;
+	padding-bottom: 0px;
+}
+h2.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 24px;
+	line-height: 30px;
+	font-weight: bold;
+	color: #000;
+	padding-bottom: 0px;
+}
+h3.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 20px;
+	line-height: 24px;
+	font-weight: bold;
+	color: #000;
+	padding-bottom: 0px;
+}
+h4.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: bold;
+	color: #000;
+	padding-bottom: 0px;
+}
+h5.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 18px;
+	line-height: 22px;
+	color: #000;
+	font-weight: normal;
+	padding-bottom: 0px;
+}
+h6.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	line-height: 22px;
+	color: #000;
+	font-weight: normal;
+	padding-bottom: 0px;
+}
+
+/* HPE heading treatment for non-h1-h6 tags */
+.hpui-heading {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	line-height: 22px;
+	color: #000;
+	font-weight: normal;
+	padding-bottom: 6px;
+	display: block;
+}
+.hpui-subheading {
+	font-family: "HP Simplified", Arial;
+	font-size: 16px;
+	font-weight: normal;
+	color: #5A5A5A;
+	line-height: 22px;
+	padding-bottom: 6px;
+	display: block;
+}
+
+/*** HPE secondary text ***/
+
+/* HPE secondary level 1 basic text */
+.hpui-secondary-text1 {
+	font-family: "HP Simplified", Arial;
+	font-size: 14px;
+	color: #000;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+/* HPE secondary level 2 basic text */
+.hpui-secondary-text2 {
+	font-family: "HP Simplified", Arial;
+	font-size: 14px;
+	font-weight: normal;
+	color: #5A5A5A;
+	line-height: 18px;
+}
+
+/* HPE secondary level 3 basic text */
+.hpui-secondary-text3 {
+	font-family: "HP Simplified", Arial;
+	font-size: 14px;
+	font-weight: normal;
+	color: #767676;
+	line-height: 18px;
+}
+
+/*** HPE status text ***/
+
+/* HPE status text: system error */
+/* Note: in HPE, system errors have no distinguishing text style */
+.hpui-system-error-text {
+}
+
+/* HPE status text: user error */
+/* Note: in HPE, user errors and warnings have the same text style */
+.hpui-user-error-text {
+	color: #FF0000 !important;
+}
+
+/* HPE status text: unclassified error */
+/* Note: in HPE, treat unclassified errors the same as user errors */
+.hpui-error-text {
+	color: #FF0000 !important;
+}
+	
+/* HPE status text: warning */
+/* Note: in HPE, user errors and warnings have the same text style */
+.hpui-warn-text {
+	color: #FF0000 !important;
+}
+
+/* HPE status text: info */
+.hpui-info-text {
+	color: #008424 !important;
+}
+
+/* HPE status text: info, level2 */
+/* currently meant for use only in service summary views */
+.hpui-info-text2 {
+	color: #0096D6 !important;
+}
+
+/* HPE status text: warn, level 2 */
+/* currently meant for use only in service summary views */
+.hpui-warn-text2 {
+	color: #FF5F00 !important;
+}
+
+/* HPE status text: warn, level 3 */
+/* currently meant for use only in service summary views */
+.hpui-warn-text3 {
+	color: #D38E06 !important;
+}
+
+/*** HPE footnote text ***/
+
+.hpui-footnote-text {
+	font-family: "HP Simplified", Arial;
+	font-size: 12px;
+	font-weight: normal;
+	color: #5A5A5A;
+	line-height: 15px;
+}
+
+/*** HPE miscellaneous typography styles ***/
+
+/* HPE emphasized text */
+.hpui-emphasized-text {
+	font-weight: bold !important;
+}
+
+/* HPE disabled text */
+.hpui-disabled-text {
+	color: #B3B3B3 !important;
+}
+
+/*** HPE fonts ***/
+
+@font-face {
+	font-family: "HP Simplified";
+	src: url("fonts/HPSimplifiedW04/HPSimplifiedW04-Regular.eot");
+	src: local("?"), url("fonts/HPSimplifiedW04/HPSimplifiedW04-Regular.woff")
+		format("woff"),
+		/*url("fonts/HPSimplifiedW04/HPSimplifiedW04-Regular.otf") format("opentype"),*/ 
+		url("fonts/HPSimplifiedW04/HPSimplifiedW04-Regular.svg#HPSimplifiedW04-Regular")
+		format("svg");
+	font-weight: normal;
+	font-style: normal;	
+}
+				
+@font-face {
+	font-family: "HP Simplified";
+	src: url("fonts/HPSimplifiedW04/HPSimplifiedW04-Bold.eot");
+	src: local("?"), url("fonts/HPSimplifiedW04/HPSimplifiedW04-Bold.woff") format("woff"),
+		/*url("fonts/HPSimplifiedW04/HPSimplifiedW04-Bold.otf") format("opentype"),*/ 
+    	url("fonts/HPSimplifiedW04/HPSimplifiedW04-Bold.svg#HPSimplifiedW04-Bold")
+		format("svg");
+	font-weight: bold;
+	font-style: normal;	
+}
+				
+@font-face {
+	font-family: "HP Simplified";
+	src: url("fonts/HPSimplifiedW04/HPSimplifiedW04-Italic.eot");
+	src: local("?"), url("fonts/HPSimplifiedW04/HPSimplifiedW04-Italic.woff") format("woff"),
+		/*url("fonts/HPSimplifiedW04/HPSimplifiedW04-Italic.otf") format("opentype"),*/ 
+		url("fonts/HPSimplifiedW04/HPSimplifiedW04-Italic.svg#HPSimplifiedW04-Italic")
+		format("svg");
+	font-weight: normal;
+		font-style: italic;	
+}
+				
+@font-face {
+	font-family: "HP Simplified";
+	src: url("fonts/HPSimplifiedW04/HPSimplifiedW04-BoldItalic.eot");
+	src: local("?"), url("fonts/HPSimplifiedW04/HPSimplifiedW04-BoldItalic.woff") format("woff"),
+		/*url("fonts/HPSimplifiedW04/HPSimplifiedW04-BoldItalic.otf") format("opentype"),*/ 
+		url("fonts/HPSimplifiedW04/HPSimplifiedW04-BoldItalic.svg#HPSimplifiedW04-BoldItalic")
+		format("svg");
+	font-weight: bold;
+	font-style: italic;	
+}
+
+/****** end HPE typography CSS (typography.css) ******/
+

@@ -1,0 +1,91 @@
+<div ng-controller="CustomerUsersController" ng-init="initUsers()">
+
+  <div class="row spacer-between">
+    <div class="col-md-3">
+      <select class="form-control" ng-model="selectedCustomer" ng-options="c.name for c in customers | orderBy:'name'" ng-change="loadUsers()" />
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" ng-model="selectedRole" ng-options="r.role for r in roles | orderBy:'name'" ng-change="loadUsers()" placeholder="Search by user role">
+        <option value="">- Filter by role -</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="userCriteria" placeholder="Search by user email" />
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="searchUsers(userCriteria)"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-2 pull-right">
+      <span class="spacer-between-xs hidden-lg"></span>
+      <a href="javascript:void(0);" ng-click="inviteUser()" class="btn-hp btn-large pull-right"><span class="span glyphicon glyphicon-plus"></span> Invite User</a>
+    </div>
+  </div>
+
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>User Email</th>
+          <th class="hidden-xs">Roles</th>
+          <th class="ico_btn"><span class="hidden-xs">Edit</span></th>
+          <th class="ico_btn"><span class="hidden-xs">Delete</span></th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="user in pageUsers">
+        <tr>
+          <td>{{user.email}}</td>
+          <td class="hidden-xs">{{user.roles | displayRoles}}</td>
+          <td class="ico_btn"><a href="javascript:void(0);" class="btn btn-default btn-xs" ng-click="updateUser(user)"><span class="glyphicon glyphicon-wrench"></span></a></td>
+          <td class="ico_btn"><a href="javascript:void(0);" class="btn btn-danger btn-xs" ng-click="deleteUser(user)"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr/>
+  <pager on-select-page="setProductRolePage(page)" ng-show="matchProductRoles.length != 0" total-items="matchProductRoles.length" page="currentPage" items-per-page="itemsPerPage" class="pager pull-right">
+
+</div>
+
+<script id="views/customerentity/invite-user-dlg.html" type="text/ng-template">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 class="modal-title">Invite User</h4>
+</div>
+<div class="modal-body">
+  <h4 class="idm-dialog-title">Customer Information</h4>
+  <form role="form">
+    <div class="form-group">
+      <label for="">Customer Name</label>
+      <p class="form-control-static">{{data.customer.name}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <p class="form-control-static">{{data.customer.description}}</p>
+    </div>
+    <div class="form-group">
+      <label for="">Email</label>
+      <input type="email" class="form-control" ng-model="data.user.email">
+    </div>
+    <div class="form-group">
+      <label for="">Role</label><br/>
+      <label ng-repeat="role in data.roles" class='idm-form-control-static'>
+        <input type="checkbox" checklist-model="data.user.roles" checklist-value="role" />{{role.role}}
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="">Import from CSV file</label>
+      <input type="file" class="form-control" />
+      <div class="form-group">
+        <button type="submit" class="btn btn-hp btn-RL">Import</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="reset" ng-click="cancel()" class="btn btn-hp btn-2nd">Cancel</button>
+  <button type="submit" ng-click="save()" class="btn btn-hp">Submit</button>
+</div>
+</script>

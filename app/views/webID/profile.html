@@ -1,0 +1,131 @@
+<!-- CREATE AN ACCOUNT-->
+<div class="gramidcontainer">
+
+  <div ng-controller="ProfileController" ng-init="initProfile()">
+
+    <section>
+      <span class="logo"></span>
+    </section>
+
+    <span class="hr"></span>
+
+    <form name="appForm" class="form-horizontal" role="form">
+
+      <div class="form-group">
+        <label for="firstName" class="control-label col-xs-12 col-sm-3">First Name:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="firstName" name="firstName" class="form-control" type="text" ng-model="user.firstName" required="required" ng-maxlength="50" ng-disabled="!editEnabled()" idm-validator="name">
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.required" tooltip="Please enter first name." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.firstName.$dirty && appForm.firstName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName" class="control-label col-xs-12 col-sm-3">Last Name:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="lastName" name="lastName" class="form-control" type="text" ng-model="user.lastName" required="required" ng-maxlength="50" ng-disabled="!editEnabled()" idm-validator="name">
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.required" tooltip="Please enter last name." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.maxlength" tooltip="Please enter no more than 50 characters." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.lastName.$dirty && appForm.lastName.$error.idmName" tooltip="This field can only contain alphabetic characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group" ng-init="changingEmail = true">
+        <label for="email" class="control-label col-xs-12 col-sm-3">Email:</label>
+        <div ng-class="changingEmail ? 'col-xs-12 col-sm-7' : 'col-xs-12 col-sm-5'">
+          <input id="email" name="email" class="form-control" type="email" ng-model="user.email" required="required" ng-maxlength="100" ng-disabled="!editEnabled()" idm-validator="email">
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.required" tooltip="Please enter email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.idmEmail" tooltip="Enter a valid email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.email.$dirty && appForm.email.$error.maxlength" tooltip="Please enter no more than 100 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+        <div class="col-xs-12 col-sm-2">
+          <button class="btn-hp btn-RL right" ng-click="changingEmail = true" ng-show="!changingEmail">Change</button>
+        </div>
+      </div>
+      <div class="form-group" ng-show="changingEmail">
+        <label for="confirmEmail" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">Repeat Email:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="confirmEmail" name="confirmEmail" class="form-control" type="email" ng-model="user.emailConfirm" required="required" ng-maxlength="100" match="user.email" ng-disabled="!editEnabled()" idm-validator="email">
+          <span class="icon" ng-show="appForm.confirmEmail.$dirty && appForm.confirmEmail.$error.required" tooltip="Please enter email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.confirmEmail.$dirty && appForm.confirmEmail.$error.idmEmail" tooltip="Enter a valid email address." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.confirmEmail.$error.mismatch" tooltip="Email Address must match." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="country" class="control-label col-xs-12 col-sm-3">Country:</label>
+        <div class="col-xs-12 col-sm-7">
+          <select id="country" name="country" class="form-control"
+              data-ng-model="user.country"
+              data-ng-options="country.code as country.name for country in countries | orderBy:'name'"
+              required="required" ng-disabled="!editEnabled()">
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="language" class="control-label col-xs-12 col-sm-3">Language:</label>
+        <div class="col-xs-12 col-sm-7">
+          <select name="language" id="language" class="form-control"
+              data-ng-model="user.language"
+              data-ng-options="language.code as language.name for language in languages | orderBy:'name'"
+              required="required" ng-disabled="!editEnabled()">
+          </select>
+        </div>
+      </div>
+
+      <span class="hr"></span>
+      
+      <div class="row form-group">
+        <div class="col-xs-12 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-7">
+          <button class="btn-hp" ng-click="changingPassword = true; onChangingPassword();" ng-show="!changingPassword">Change Password</button>
+          <button class="btn-hp" ng-click="changingPassword = false; onCancelChangingPassword();" ng-show="changingPassword">Cancel Change Password</button>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="changingPassword">
+        <label class="control-label col-xs-12 col-sm-3 idm-no-asterisk">Current Password:</label>
+        <div ng-class="changingPassword ? 'col-xs-12 col-sm-7' : 'col-xs-12 col-sm-5'">
+          <input id="password" name="password" class="form-control" type="password" ng-model="user.password" required="required" ng-minlength="6" ng-maxlength="20" ng-disabled="!changingPassword">
+          <span class="icon" ng-show="appForm.password.$dirty && appForm.password.$error.required" tooltip="Please enter password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.password.$dirty && (appForm.password.$error.maxlength || appForm.password.$error.minlength)" tooltip="Passwords must be 6-20 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+        <!-- div class="col-xs-12 col-sm-2">
+          <button class="btn-hp right" ng-click="changingPassword = true; onChangingPassword();" ng-show="!changingPassword">Change</button>
+        </div -->
+      </div>
+      <div class="form-group" ng-show="changingPassword">
+        <label for="newPassword" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">New Password:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="newPassword" name="newPassword" class="form-control" type="password" ng-model="user.passwordNew" required="required" ng-minlength="6" ng-maxlength="20">
+          <span class="icon" ng-show="appForm.newPassword.$dirty && appForm.newPassword.$error.required" tooltip="Please enter new password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.newPassword.$dirty && (appForm.newPassword.$error.maxlength || appForm.newPassword.$error.minlength)" tooltip="Passwords must be 6-20 characters." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+      <div class="form-group" ng-show="changingPassword">
+        <label for="repeatPassword" class="control-label col-xs-12 col-sm-3 idm-no-asterisk">Repeat New Password:</label>
+        <div class="col-xs-12 col-sm-7">
+          <input id="repeatPassword" name="repeatPassword" class="form-control" type="password" ng-model="user.passwordConfirm" required="required" match="user.passwordNew">
+          <span class="icon" ng-show="appForm.repeatPassword.$dirty && appForm.repeatPassword.$error.required" tooltip="Please enter password." tooltip-placement="left">&nbsp;</span>
+          <span class="icon" ng-show="appForm.repeatPassword.$error.mismatch" tooltip="Passwords must match." tooltip-placement="left">&nbsp;</span>
+        </div>
+      </div>
+
+    </form>
+
+    <span class="hr" ng-show="changingPassword"></span>
+
+    <section class="checkboxtext idm-button-bar">
+      <div class="half">
+        &nbsp;
+      </div>
+
+      <div class="half">
+        <div class="right">
+          <button ng-disabled="appForm.$invalid" ng-click="updateUser()" class="btn-hp btn-RL">Submit</button>
+          <button ng-click="cancelUpdate()" class="btn-hp btn-RL btn-2nd">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
